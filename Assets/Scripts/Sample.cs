@@ -14,13 +14,15 @@ public class Sample : MonoBehaviour
 
     private void OnEnable()
     {
-        _androidNativeHelper = new AndroidNativeHelper();
-        _androidNativeHelper.InitNativeLib();
+        
     }
 
     private void Start()
     {
-        
+        _androidNativeHelper = new AndroidNativeHelper();
+        _androidNativeHelper.InitNativeLib();
+        Find();
+        Open();
     }
 
     public void Find()
