@@ -1,24 +1,81 @@
+using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class OlfactoryDeviceManager : MonoBehaviour
 {
     protected AndroidJavaObject _androidInstanceJavaObject;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        AndroidJavaObject androidUnityLibJavaClass = new AndroidJavaObject("com.hoho.android.usbserial.examples.TerminalFragment");
-        _androidInstanceJavaObject = androidUnityLibJavaClass.CallStatic<AndroidJavaObject>("getInstance");
-    }
+    
+    [SerializeField] private int _baudRate;
+    [SerializeField] private int _dataBits;
+    [SerializeField] private int _stopBits;
+    [SerializeField] private int _parity;
 
-    public void ConnectToArduino()
+
+    private void Awake()
     {
+        AndroidJavaObject androidUnityLibJavaClass = new AndroidJavaObject("com.ethanlin.serialportlib.UnitySerialPortDataLib");
+        _androidInstanceJavaObject = androidUnityLibJavaClass.CallStatic<AndroidJavaObject>("getInstance");
         if (_androidInstanceJavaObject != null)
         {
-            _androidInstanceJavaObject.Call("TerminalFragment");
+            _androidInstanceJavaObject.Call("initSerialPortManagerAndReceiver");
         }
         else
         {
-            Debug.LogError("Error, android native library Java object is null!!!");
+            Debug.LogError("Error, android native library Java object is null");
+        }
+    }
+
+    private void Start()
+    {
+        Open();
+        Open();
+
+    }
+
+    public void GoToWorld()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene("World");
+    }
+
+
+    public void Open()
+    {
+        if (_androidInstanceJavaObject != null)
+        {
+            _androidInstanceJavaObject.Call("openSerialPort", _baudRate, _dataBits, _stopBits, _parity);
+        }
+        else
+        {
+            Debug.LogError("Error, android native library Java object is null");
+        }
+    }
+
+    public void Write(string message)
+    {
+        if (_androidInstanceJavaObject != null)
+        {
+            _androidInstanceJavaObject.Call("writeSerialPort", message);
+        }
+        else
+        {
+            Debug.LogError("Error, android native library Java object is null");
+        }
+    }
+
+    public void StartPump(int pump) 
+    {
+        Write("setAPump:" + pump);
+        Write("setF:75");
+        Write("setStatus:1");
+    }
+
+    public void StopAllPumps() 
+    {
+        for (int i = 0; i < 5; i++)
+        {
+            Write("setAPump:" + i);
+            Write("setStatus:0");
         }
     }
 }
