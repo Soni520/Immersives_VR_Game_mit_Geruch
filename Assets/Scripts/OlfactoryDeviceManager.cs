@@ -33,9 +33,9 @@ public class OlfactoryDeviceManager : MonoBehaviour
 
     }
 
-    public void GoToWorld()
+    public void ChangeScene(string sceneName)
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene("World");
+        UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName);
     }
 
 
