@@ -1,19 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using TMPro;
+using System;
+using Random = UnityEngine.Random;
+using JetBrains.Annotations;
 
 public class search_logic : MonoBehaviour
 {
 
-    public List<GameObject> searchableObjects;
     public TextMeshProUGUI uiText;
     public Transform player;
+
+    public List<Vector3> spawnPositions;
+    public List<GameObject> spawnableObjects;
 
     [Header("Hint Settings")]
     public float timeUntilHint = 10f;
     public ParticleSystem particleTrailPrefab;
 
+    private List<GameObject> spawnedObjects = new List<GameObject>();
     private GameObject targetObject;
     private float searchTimer = 0f;
     private ParticleSystem activeParticleTrail;
@@ -22,14 +29,10 @@ public class search_logic : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (searchableObjects == null || searchableObjects.Count == 0)
-        {
-            Debug.LogError("searchableObjects list is empty or null!");
-            return;
-        }
+        SpawnObjects();
 
-        int randomObjectIndex = Random.Range(0, searchableObjects.Count);
-        targetObject = searchableObjects[randomObjectIndex];
+        int randomObjectIndex = Random.Range(0, spawnedObjects.Count);
+        targetObject = spawnedObjects[randomObjectIndex];
 
         HighlightObject(targetObject);
         searchTimer = 0f;
@@ -65,6 +68,21 @@ public class search_logic : MonoBehaviour
         }
     }
 
+    void SpawnObjects()
+    {
+        while (spawnableObjects.Count > 0)
+        {
+            int objIndex = Random.Range(0, spawnableObjects.Count);
+            int posIndex = Random.Range(0, spawnPositions.Count);
+
+            GameObject spawned = Instantiate(spawnableObjects[objIndex], spawnPositions[posIndex], Quaternion.identity);
+            spawnedObjects.Add(spawned);
+
+            spawnableObjects.RemoveAt(objIndex);
+            spawnPositions.RemoveAt(posIndex);
+        }
+    }
+
     void CheckIfTargetObject(GameObject clickedObject)
     {
         if (clickedObject == targetObject)
@@ -84,6 +102,7 @@ public class search_logic : MonoBehaviour
         {
             Destroy(activeParticleTrail.gameObject);
             activeParticleTrail = null;
+            changeScene("meditation_scene");
         }
         hintActive = false;
     }
@@ -126,5 +145,11 @@ public class search_logic : MonoBehaviour
             Vector3 direction = (targetObject.transform.position - player.position).normalized;
             activeParticleTrail.transform.rotation = Quaternion.LookRotation(direction);
         }
+    }
+
+    void changeScene(String sceneName)
+    {
+        SceneManager.LoadScene(sceneName);
+        
     }
 }
