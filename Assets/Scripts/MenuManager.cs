@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public class MenuManager : MonoBehaviour
 {
-    public Slider settingsSlider; // Slider-Referenz im Inspector zuweisen
+    public Slider settingsSlider; 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -37,15 +37,13 @@ public class MenuManager : MonoBehaviour
 
     void OnSliderValueChanged(float value)
     {
-        // Wert in PlayerPrefs speichern
-        PlayerPrefs.SetFloat("SliderValue", value);
+        PlayerPrefs.SetFloat("scentIntensity", value);
         PlayerPrefs.Save();
         Debug.Log("Slider Wert gespeichert: " + value);
     }
 
-    // Statische Methode zum Abrufen des Werts aus anderen Szenen
     public static float GetSliderValue()
     {
-        return PlayerPrefs.GetFloat("SliderValue", 1.0f);
+        return PlayerPrefs.GetFloat("scentIntensity", 1.0f);
     }
 }
