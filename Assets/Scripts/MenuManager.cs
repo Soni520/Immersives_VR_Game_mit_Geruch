@@ -22,4 +22,9 @@ public class MenuManager : MonoBehaviour
     {
         GameObject.Find("MenuCanvas").GetComponent<Canvas>().enabled = false;
     }
+
+    public void ChangeScene(string sceneName)
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName);
+    }
 }

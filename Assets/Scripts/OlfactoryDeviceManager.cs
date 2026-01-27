@@ -33,12 +33,6 @@ public class OlfactoryDeviceManager : MonoBehaviour
 
     }
 
-    public void ChangeScene(string sceneName)
-    {
-        UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName);
-    }
-
-
     public void Open()
     {
         if (_androidInstanceJavaObject != null)
@@ -63,10 +57,18 @@ public class OlfactoryDeviceManager : MonoBehaviour
         }
     }
 
-    public void StartPump(int pump) 
+    public void SetPump(int pump) 
     {
         Write("setAPump:" + pump);
         Write("setF:75");
+    }
+
+    public void SetFrequency(double frequency)
+    {
+        Write("setF:" + frequency);
+    }
+    public void StartPump()
+    {
         Write("setStatus:1");
     }
 
