@@ -1,4 +1,5 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,6 +11,7 @@ public class OlfactoryDeviceManager : MonoBehaviour
     [SerializeField] private int _dataBits;
     [SerializeField] private int _stopBits;
     [SerializeField] private int _parity;
+    [SerializeField] private TextMeshProUGUI TextField;
 
 
     private void Awake()
@@ -30,6 +32,7 @@ public class OlfactoryDeviceManager : MonoBehaviour
     {
         Open();
         Open();
+        TextField.text = "OlfactoryDevice connected!";
 
     }
 

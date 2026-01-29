@@ -7,15 +7,15 @@ public class ObjectScentManager : MonoBehaviour
 {
     private search_logic SearchLogicScript;
     private OlfactoryDeviceManager OlfactoryDeviceManager;
-    private GameObject Player;
+    [SerializeField] private GameObject Player;
     private string CurrentPump = null;
     private double CurrentFrequency = -1.0;
+    [SerializeField] private TextMeshProUGUI TextField;
 
     void Awake()
     {
         SearchLogicScript = GetComponent<search_logic>();
         OlfactoryDeviceManager = GetComponent<OlfactoryDeviceManager>();
-        Player = GameObject.Find("PlayerController");
     }
 
     void Start()
@@ -41,10 +41,7 @@ public class ObjectScentManager : MonoBehaviour
                 SetFrequency(NewFrequency);
                 CurrentFrequency = NewFrequency;
             }
-        }else
-        {
-            SearchLogicScript = GetComponent<search_logic>();
-            Player = GameObject.Find("PlayerController");
+            TextField.text = CurrentPump + ", Frequency: " + CurrentFrequency.ToString() + ", Distance: " + FindNearestObject.Item2.ToString();
         }
     }
 
