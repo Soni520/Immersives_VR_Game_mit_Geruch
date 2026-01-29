@@ -309,15 +309,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8790002322242572388, guid: fc5d264b4c17db5488cfad61a355bb11, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 330.854
+      value: -7
       objectReference: {fileID: 0}
     - target: {fileID: 8790002322242572388, guid: fc5d264b4c17db5488cfad61a355bb11, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 53.792
+      value: 38.25
       objectReference: {fileID: 0}
     - target: {fileID: 8790002322242572388, guid: fc5d264b4c17db5488cfad61a355bb11, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 6.233
+      value: -30
       objectReference: {fileID: 0}
     - target: {fileID: 8790002322242572388, guid: fc5d264b4c17db5488cfad61a355bb11, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1426,6 +1426,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pineapple
       objectReference: {fileID: 0}
+    - target: {fileID: 192558876969429361, guid: a0cfe7b824aebc14395e02c0bbc9a9d8, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 713763279875093451, guid: a0cfe7b824aebc14395e02c0bbc9a9d8, type: 3}
       propertyPath: m_LocalScale.x
       value: 2.0610738
@@ -2167,15 +2171,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4987692465520056402, guid: 6a9eeca5d59c823488177969fff67e3b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.408
+      value: -10
       objectReference: {fileID: 0}
     - target: {fileID: 4987692465520056402, guid: 6a9eeca5d59c823488177969fff67e3b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 35
+      value: 41
       objectReference: {fileID: 0}
     - target: {fileID: 4987692465520056402, guid: 6a9eeca5d59c823488177969fff67e3b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.0965
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 4987692465520056402, guid: 6a9eeca5d59c823488177969fff67e3b, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2209,11 +2213,20 @@ PrefabInstance:
       propertyPath: m_Name
       value: Lemon
       objectReference: {fileID: 0}
+    - target: {fileID: 5655403424763036392, guid: 6a9eeca5d59c823488177969fff67e3b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6a9eeca5d59c823488177969fff67e3b, type: 3}
+--- !u!1 &1001530040 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5655403424763036392, guid: 6a9eeca5d59c823488177969fff67e3b, type: 3}
+  m_PrefabInstance: {fileID: 1001530039}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1016576148
 GameObject:
   m_ObjectHideFlags: 0
@@ -2804,7 +2817,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!23 &1270964242
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -4040,9 +4053,11 @@ MonoBehaviour:
   uiText: {fileID: 0}
   player: {fileID: 0}
   spawnPositions:
-  - {x: 0.408, y: 35, z: 0.5}
+  - {x: -7, y: 38.25, z: -30}
+  - {x: -10, y: 41, z: 50}
   spawnableObjects:
   - {fileID: 64827791}
+  - {fileID: 1001530040}
   timeUntilHint: 10
   particleTrailPrefab: {fileID: 0}
 --- !u!4 &1875286601
@@ -4953,6 +4968,6 @@ SceneRoots:
   - {fileID: 1950459610}
   - {fileID: 1875286601}
   - {fileID: 64827790}
-  - {fileID: 501231293}
   - {fileID: 1001530039}
+  - {fileID: 501231293}
   - {fileID: 1270964244}
