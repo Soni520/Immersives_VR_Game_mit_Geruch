@@ -8,6 +8,9 @@ public class ObjectScentManager : MonoBehaviour
     private search_logic SearchLogicScript;
     private OlfactoryDeviceManager OlfactoryDeviceManager;
     private GameObject Player;
+    private string CurrentPump = null;
+    private double CurrentFrequency = -1.0;
+
     void Awake()
     {
         SearchLogicScript = GetComponent<search_logic>();
@@ -25,7 +28,19 @@ public class ObjectScentManager : MonoBehaviour
         if (SearchLogicScript != null && Player != null)
         {
             var FindNearestObject = NearestObject();
-            
+            string NewPump = FindNearestObject.Item1.name;
+            double NewFrequency = (-FindNearestObject.Item2 / 3.5 + 200);
+
+            if (CurrentPump != NewPump)
+            {
+                SetScent(NewPump);
+                CurrentPump = NewPump;
+            }
+            if (CurrentFrequency != NewFrequency)
+            {
+                SetFrequency(NewFrequency);
+                CurrentFrequency = NewFrequency;
+            }
         }else
         {
             SearchLogicScript = GetComponent<search_logic>();
@@ -33,7 +48,7 @@ public class ObjectScentManager : MonoBehaviour
         }
     }
 
-    private (GameObject, float) NearestObject()
+    private (GameObject, double) NearestObject()
     {
         GameObject ReturnObject = null;
         float NearestDistance = float.MaxValue;
@@ -46,19 +61,38 @@ public class ObjectScentManager : MonoBehaviour
                 NearestDistance = TempDistance;
             }
         }
-        return (ReturnObject, NearestDistance);
+        return (ReturnObject, (double)NearestDistance);
     }
 
-    private void SetScent(GameObject GameObject)
+    private void SetScent(string Pump)
     {
+        switch (Pump)
+        {
+            case "Watermelon":
+                OlfactoryDeviceManager.SetPump(1);
+                break;
+            case "Lemon":
+                OlfactoryDeviceManager.SetPump(2);
+                break;
+            case "Pineapple":
+                OlfactoryDeviceManager.SetPump(3);
+                break;
+            case "Coconut":
+                OlfactoryDeviceManager.SetPump(4);
+                break;
 
-        OlfactoryDeviceManager.SetPump();
+        }
     }
 
-    private void SetFrequency(float Distance)
+    private void SetFrequency(double Frequency)
     {
-
-        OlfactoryDeviceManager.SetFrequency();
+        if (Frequency > 0)
+        {
+            OlfactoryDeviceManager.SetFrequency(Frequency);
+        }else
+        {
+            OlfactoryDeviceManager.SetFrequency(0);
+        }
         OlfactoryDeviceManager.StartPump();
     }
 }

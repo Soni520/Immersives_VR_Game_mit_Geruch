@@ -1483,11 +1483,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a0cfe7b824aebc14395e02c0bbc9a9d8, type: 3}
---- !u!1 &501231294 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 192558876969429361, guid: a0cfe7b824aebc14395e02c0bbc9a9d8, type: 3}
-  m_PrefabInstance: {fileID: 501231293}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &542262347
 GameObject:
   m_ObjectHideFlags: 0
@@ -2172,15 +2167,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4987692465520056402, guid: 6a9eeca5d59c823488177969fff67e3b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 330.834
+      value: 0.408
       objectReference: {fileID: 0}
     - target: {fileID: 4987692465520056402, guid: 6a9eeca5d59c823488177969fff67e3b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 53.805
+      value: 35
       objectReference: {fileID: 0}
     - target: {fileID: 4987692465520056402, guid: 6a9eeca5d59c823488177969fff67e3b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 6.04708
+      value: -0.0965
       objectReference: {fileID: 0}
     - target: {fileID: 4987692465520056402, guid: 6a9eeca5d59c823488177969fff67e3b, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2219,11 +2214,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6a9eeca5d59c823488177969fff67e3b, type: 3}
---- !u!1 &1001530040 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5655403424763036392, guid: 6a9eeca5d59c823488177969fff67e3b, type: 3}
-  m_PrefabInstance: {fileID: 1001530039}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1016576148
 GameObject:
   m_ObjectHideFlags: 0
@@ -4050,17 +4040,9 @@ MonoBehaviour:
   uiText: {fileID: 0}
   player: {fileID: 0}
   spawnPositions:
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
+  - {x: 0.408, y: 35, z: 0.5}
   spawnableObjects:
   - {fileID: 64827791}
-  - {fileID: 501231294}
-  - {fileID: 1001530040}
-  - {fileID: 1270964241}
   timeUntilHint: 10
   particleTrailPrefab: {fileID: 0}
 --- !u!4 &1875286601
