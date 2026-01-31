@@ -5,8 +5,8 @@ using Unity.VisualScripting;
 
 public class ObjectScentManager : MonoBehaviour
 {
-    private search_logic SearchLogicScript;
-    private OlfactoryDeviceManager OlfactoryDeviceManager;
+    [SerializeField] private search_logic SearchLogicScript;
+    [SerializeField] private OlfactoryDeviceManager OlfactoryDeviceManager;
     [SerializeField] private GameObject Player;
     private string CurrentPump = null;
     private double CurrentFrequency = -1.0;
@@ -14,8 +14,7 @@ public class ObjectScentManager : MonoBehaviour
 
     void Awake()
     {
-        SearchLogicScript = GetComponent<search_logic>();
-        OlfactoryDeviceManager = GetComponent<OlfactoryDeviceManager>();
+
     }
 
     void Start()
@@ -29,7 +28,7 @@ public class ObjectScentManager : MonoBehaviour
         {
             var FindNearestObject = NearestObject();
             string NewPump = FindNearestObject.Item1.name;
-            double NewFrequency = (-FindNearestObject.Item2 / 3.5 + 200);
+            double NewFrequency = (-FindNearestObject.Item2 / 5 + 100);
 
             if (CurrentPump != NewPump)
             {
@@ -49,7 +48,7 @@ public class ObjectScentManager : MonoBehaviour
     {
         GameObject ReturnObject = null;
         float NearestDistance = float.MaxValue;
-        foreach (GameObject gameObject in SearchLogicScript.spawnableObjects)
+        foreach (GameObject gameObject in SearchLogicScript.spawnedObjects)
         {
             float TempDistance = Vector3.Distance(gameObject.transform.position, Player.transform.position);
             if (TempDistance < NearestDistance)
@@ -65,16 +64,16 @@ public class ObjectScentManager : MonoBehaviour
     {
         switch (Pump)
         {
-            case "Watermelon":
+            case "Watermelon(Clone)":
                 OlfactoryDeviceManager.SetPump(1);
                 break;
-            case "Lemon":
+            case "Coconut(Clone)":
                 OlfactoryDeviceManager.SetPump(2);
                 break;
-            case "Pineapple":
+            case "Lemon(Clone)":
                 OlfactoryDeviceManager.SetPump(3);
                 break;
-            case "Coconut":
+            case "Pineapple(Clone)":
                 OlfactoryDeviceManager.SetPump(4);
                 break;
 
@@ -83,7 +82,7 @@ public class ObjectScentManager : MonoBehaviour
 
     private void SetFrequency(double Frequency)
     {
-        if (Frequency > 0)
+        if (0 < Frequency && Frequency < 100)
         {
             OlfactoryDeviceManager.SetFrequency(Frequency);
         }else
