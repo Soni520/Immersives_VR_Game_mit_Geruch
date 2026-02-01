@@ -1,7 +1,14 @@
+using System.Security.Cryptography;
 using UnityEngine;
 
 public class MenuManager : MonoBehaviour
 {
+    private ObjectScentManager ObjectScentManager;
+
+    private void Awake()
+    {
+        ObjectScentManager = GetComponent<ObjectScentManager>();
+    }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -18,9 +25,11 @@ public class MenuManager : MonoBehaviour
             if(GameObject.Find("MenuCanvas").GetComponent<CanvasGroup>().alpha == 0)
             {
                 GameObject.Find("MenuCanvas").GetComponent<CanvasGroup>().alpha = 1;
+                ObjectScentManager.MenuOn = true;
             } else if(GameObject.Find("MenuCanvas").GetComponent<CanvasGroup>().alpha == 1)
             {
                 GameObject.Find("MenuCanvas").GetComponent<CanvasGroup>().alpha = 0;
+                ObjectScentManager.MenuOn = false;
             }
         }
     }
@@ -29,6 +38,7 @@ public class MenuManager : MonoBehaviour
     {
         GameObject.Find("MenuCanvas").GetComponent<CanvasGroup>().alpha = 0;
         GameObject.Find("MenuCanvas").GetComponent<CanvasGroup>().interactable = false;
+        ObjectScentManager.MenuOn = false;
 
     }
 

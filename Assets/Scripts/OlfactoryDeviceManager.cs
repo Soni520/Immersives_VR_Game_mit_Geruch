@@ -30,9 +30,6 @@ public class OlfactoryDeviceManager : MonoBehaviour
 
     private void Start()
     {
-        Open();
-        Open();
-        TextField.text = "OlfactoryDevice connected!";
 
     }
 
@@ -41,6 +38,7 @@ public class OlfactoryDeviceManager : MonoBehaviour
         if (_androidInstanceJavaObject != null)
         {
             _androidInstanceJavaObject.Call("openSerialPort", _baudRate, _dataBits, _stopBits, _parity);
+            TextField.text = "Connected";
         }
         else
         {
@@ -70,17 +68,19 @@ public class OlfactoryDeviceManager : MonoBehaviour
     {
         Write("setF:" + frequency);
     }
-    public void StartPump()
+    public bool StartPump()
     {
         Write("setStatus:1");
+        return true;
     }
 
-    public void StopAllPumps() 
+    public bool StopAllPumps() 
     {
         for (int i = 0; i < 5; i++)
         {
             Write("setAPump:" + i);
             Write("setStatus:0");
         }
+        return false;
     }
 }
