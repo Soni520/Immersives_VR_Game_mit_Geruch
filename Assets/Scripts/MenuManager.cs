@@ -48,12 +48,8 @@ public class MenuManager : MonoBehaviour
 
     void HandleControllerRaycast(OVRInput.Controller controller)
     {
-        // Nur wenn Index Trigger gedrückt wird
-        bool triggerPressed = false;
-        if (controller == OVRInput.Controller.RTouch)
-            triggerPressed = OVRInput.Get(OVRInput.Button.SecondaryIndexTrigger);
-        else if (controller == OVRInput.Controller.LTouch)
-            triggerPressed = OVRInput.Get(OVRInput.Button.PrimaryIndexTrigger);
+        // Index Trigger Abfrage - beide Controller verwenden denselben Button
+        bool triggerPressed = OVRInput.Get(OVRInput.Button.PrimaryIndexTrigger, controller);
 
         if (!triggerPressed) return;
 
@@ -72,16 +68,24 @@ public class MenuManager : MonoBehaviour
             if (leftController != null) controllerTransform = leftController.transform;
         }
 
-        if (controllerTransform == null) return;
+        if (controllerTransform == null)
+        {
+            Debug.LogWarning("Controller Transform nicht gefunden!");
+            return;
+        }
 
         // Raycast für UI ausführen
         RaycastHit hit;
         if (Physics.Raycast(controllerTransform.position, controllerTransform.forward, out hit, 10f))
         {
+            Debug.Log($"Raycast Hit: {hit.collider.gameObject.name}");
+
             // Prüfen ob wir einen Slider getroffen haben
             Slider hitSlider = hit.collider.GetComponentInParent<Slider>();
             if (hitSlider != null && (hitSlider == timeSlider || hitSlider == scentSlider))
             {
+                Debug.Log($"Slider getroffen: {hitSlider.name}");
+
                 // Slider-Wert basierend auf Hit-Position berechnen
                 RectTransform sliderRect = hitSlider.GetComponent<RectTransform>();
                 Vector3 localHitPoint = sliderRect.InverseTransformPoint(hit.point);
@@ -100,7 +104,9 @@ public class MenuManager : MonoBehaviour
                         normalizedValue = 1f - normalizedValue;
                 }
 
-                hitSlider.value = Mathf.Clamp01(normalizedValue);
+                float clampedValue = Mathf.Clamp01(normalizedValue);
+                Debug.Log($"Setting slider value to: {clampedValue}");
+                hitSlider.value = clampedValue;
             }
         }
     }
