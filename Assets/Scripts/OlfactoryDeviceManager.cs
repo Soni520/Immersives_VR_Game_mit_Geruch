@@ -83,4 +83,9 @@ public class OlfactoryDeviceManager : MonoBehaviour
         }
         return false;
     }
+
+    void OnApplicationQuit()
+    {
+        StopAllPumps();
+    }
 }

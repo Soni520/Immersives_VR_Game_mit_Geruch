@@ -10,15 +10,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4987692465520056402, guid: 6a9eeca5d59c823488177969fff67e3b, type: 3}
       propertyPath: m_LocalScale.x
-      value: 4.15628
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4987692465520056402, guid: 6a9eeca5d59c823488177969fff67e3b, type: 3}
       propertyPath: m_LocalScale.y
-      value: 4.15628
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4987692465520056402, guid: 6a9eeca5d59c823488177969fff67e3b, type: 3}
       propertyPath: m_LocalScale.z
-      value: 4.15628
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4987692465520056402, guid: 6a9eeca5d59c823488177969fff67e3b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -60,9 +60,13 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4987692465520056402, guid: 6a9eeca5d59c823488177969fff67e3b, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5655403424763036392, guid: 6a9eeca5d59c823488177969fff67e3b, type: 3}
       propertyPath: m_Name
-      value: Lemon Variant
+      value: Lemon
       objectReference: {fileID: 0}
     - target: {fileID: 5655403424763036392, guid: 6a9eeca5d59c823488177969fff67e3b, type: 3}
       propertyPath: m_IsActive

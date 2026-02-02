@@ -10,19 +10,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 8266229739968056030, guid: fc5d264b4c17db5488cfad61a355bb11, type: 3}
       propertyPath: m_Name
-      value: Watermelon Variant
+      value: Watermelon
       objectReference: {fileID: 0}
     - target: {fileID: 8790002322242572388, guid: fc5d264b4c17db5488cfad61a355bb11, type: 3}
       propertyPath: m_LocalScale.x
-      value: 3.7955618
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 8790002322242572388, guid: fc5d264b4c17db5488cfad61a355bb11, type: 3}
       propertyPath: m_LocalScale.y
-      value: 3.7955618
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 8790002322242572388, guid: fc5d264b4c17db5488cfad61a355bb11, type: 3}
       propertyPath: m_LocalScale.z
-      value: 3.7955618
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 8790002322242572388, guid: fc5d264b4c17db5488cfad61a355bb11, type: 3}
       propertyPath: m_LocalPosition.x
@@ -30,7 +30,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8790002322242572388, guid: fc5d264b4c17db5488cfad61a355bb11, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 38.25
+      value: 38
       objectReference: {fileID: 0}
     - target: {fileID: 8790002322242572388, guid: fc5d264b4c17db5488cfad61a355bb11, type: 3}
       propertyPath: m_LocalPosition.z
@@ -63,6 +63,10 @@ PrefabInstance:
     - target: {fileID: 8790002322242572388, guid: fc5d264b4c17db5488cfad61a355bb11, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8790002322242572388, guid: fc5d264b4c17db5488cfad61a355bb11, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
