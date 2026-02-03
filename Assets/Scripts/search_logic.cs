@@ -20,7 +20,7 @@ public class search_logic : MonoBehaviour
     public float timeUntilHint = 10f;
     public ParticleSystem particleTrailPrefab;
 
-    private List<GameObject> spawnedObjects = new List<GameObject>();
+    public List<GameObject> spawnedObjects = new List<GameObject>();
     private GameObject targetObject;
     private float searchTimer = 0f;
     private ParticleSystem activeParticleTrail;
