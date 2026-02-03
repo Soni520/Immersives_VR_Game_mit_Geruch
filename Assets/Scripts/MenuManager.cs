@@ -5,10 +5,12 @@ using TMPro;
 public class MenuManager : MonoBehaviour
 {
     private ObjectScentManager ObjectScentManager;
+    private OlfactoryDeviceManager OlfactoryDeviceManager;
 
     private void Awake()
     {
         ObjectScentManager = GetComponent<ObjectScentManager>();
+        OlfactoryDeviceManager = GetComponent<OlfactoryDeviceManager>();
     }
     public TextMeshProUGUI minute_text;
     public TextMeshProUGUI scent_text;
@@ -21,6 +23,8 @@ public class MenuManager : MonoBehaviour
     private const int MIN_SCENT = 0;
     private const int MAX_SCENT = 100;
     private const int SCENT_STEP = 10;
+
+    private bool OlfactoryStarted = false;
 
     void Start()
     {
@@ -88,6 +92,13 @@ public class MenuManager : MonoBehaviour
             SaveScentValue();
             UpdateScentText();
         }
+
+        if (!OlfactoryStarted)
+        {
+            OlfactoryDeviceManager.Open();
+            OlfactoryDeviceManager.Open();
+            OlfactoryStarted = true;
+        }
     }
 
     public void OnScentPlusClicked()
@@ -97,6 +108,13 @@ public class MenuManager : MonoBehaviour
             currentScentPercent += SCENT_STEP;
             SaveScentValue();
             UpdateScentText();
+        }
+
+        if (!OlfactoryStarted)
+        {
+            OlfactoryDeviceManager.Open();
+            OlfactoryDeviceManager.Open();
+            OlfactoryStarted = true;
         }
     }
 
