@@ -1,46 +1,28 @@
 using UnityEngine;
 using UnityEngine.Video;
+using System.Collections.Generic;
 
-public class PingPongVideo : MonoBehaviour
+public class VideoManager : MonoBehaviour
 {
     public VideoPlayer videoPlayer;
-    public float playbackSpeed = 1f;
-
-    private bool forward = true;
+    public List<VideoClip> videoClips;
+    private int currentClipIndex = 0;
 
     void Start()
     {
-        videoPlayer.isLooping = false;
-        videoPlayer.playOnAwake = false;
-        videoPlayer.Play();
+        videoPlayer.loopPointReached += OnVideoFinished;
+        PlayCurrentVideo();
     }
 
-    void Update()
+    void OnVideoFinished(VideoPlayer vp)
     {
-        if (!videoPlayer.isPrepared)
-            return;
+        currentClipIndex = (currentClipIndex + 1) % videoClips.Count;
+        PlayCurrentVideo();
+    }
 
-        double delta = Time.deltaTime * playbackSpeed;
-
-        if (forward)
-        {
-            videoPlayer.time += delta;
-
-            if (videoPlayer.time >= videoPlayer.length)
-            {
-                videoPlayer.time = videoPlayer.length;
-                forward = false;
-            }
-        }
-        else
-        {
-            videoPlayer.time -= delta;
-
-            if (videoPlayer.time <= 0)
-            {
-                videoPlayer.time = 0;
-                forward = true;
-            }
-        }
+    void PlayCurrentVideo()
+    {
+        videoPlayer.clip = videoClips[currentClipIndex];
+        videoPlayer.Play();
     }
 }
