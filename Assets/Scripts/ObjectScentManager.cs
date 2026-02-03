@@ -23,7 +23,7 @@ public class ObjectScentManager : MonoBehaviour
     {
         SearchLogicScript = GetComponent<search_logic>();
         OlfactoryDeviceManager = GetComponent<OlfactoryDeviceManager>();
-        MaxScentValue = PlayerPrefs.GetFloat("ScentIntensity", 1.0f) * 3.0f;
+        MaxScentValue = PlayerPrefs.GetInt("ScentIntensity", 50) * 3.0f;
     }
 
     void Start()
@@ -37,25 +37,30 @@ public class ObjectScentManager : MonoBehaviour
         {
             var FindNearestObject = NearestObject();
             string NewPump = FindNearestObject.Item1.name;
-            double NewFrequency = Math.Round((-FindNearestObject.Item2 / 3.4 + MaxScentValue) / 10) * 10;
+            double FrequencyMultiplier = 500 / MaxScentValue;
+            double NewFrequency = Math.Round((-FindNearestObject.Item2 / FrequencyMultiplier + MaxScentValue) / 10) * 10;
+            NewFrequency = NewFrequency * (double)PlayerPrefs.GetInt("ScentIntensity", 50) / 50.0;
 
             if (CurrentPump != NewPump)
             {
                 SetScent(NewPump);
                 CurrentPump = NewPump;
+                SetFrequency(NewFrequency);
+                CurrentFrequency = NewFrequency;
             }
             if (CurrentFrequency != NewFrequency)
             {
                 SetFrequency(NewFrequency);
                 CurrentFrequency = NewFrequency;
             }
-            TextField.text = CurrentPump + ", Frequency: " + CurrentFrequency.ToString() + "PumpOn: " + PumpOn.ToString();
         }
         if (OlfactoryDeviceManager != null && MenuOn && PumpOn)
         {
             PumpOn = OlfactoryDeviceManager.StopAllPumps();
             CurrentPump = null;
         }
+        
+        TextField.text = CurrentPump + ", Frequency: " + CurrentFrequency.ToString() + "MaxScentValue: " + MaxScentValue.ToString() + "Distance: " + NearestObject().Item2.ToString();
     }
 
     private (GameObject, double) NearestObject()
@@ -108,7 +113,6 @@ public class ObjectScentManager : MonoBehaviour
 
     private void SetFrequency(double Frequency)
     {
-        Frequency = Frequency * PlayerPrefs.GetFloat("ScentIntensity", 1.0f) / 50.0;
         if (0 <= Frequency && Frequency <= MaxScentValue)
         {
             OlfactoryDeviceManager.SetFrequency(Frequency);
@@ -116,5 +120,6 @@ public class ObjectScentManager : MonoBehaviour
         {
             OlfactoryDeviceManager.SetFrequency(0);
         }
+        TextField.text = CurrentPump + ", Frequency: " + Frequency.ToString() + "MaxScentValue: " + MaxScentValue.ToString() + "Distance: " + NearestObject().Item2.ToString();
     }
 }

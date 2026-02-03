@@ -30,29 +30,29 @@ public class MenuManager : MonoBehaviour
     {
 
         // Gespeicherte Werte laden
-        float savedTimeValue = PlayerPrefs.GetFloat("TimeValue", 1.0f);
-        currentMinutes = Mathf.RoundToInt(Mathf.Lerp(MIN_MINUTES, MAX_MINUTES, savedTimeValue));
+        int savedTimeValue = PlayerPrefs.GetInt("TimeValue", 1);
+        currentMinutes = savedTimeValue;
 
-        float savedScentValue = PlayerPrefs.GetFloat("ScentIntensity", 1.0f);
-        currentScentPercent = Mathf.RoundToInt(savedScentValue * 100f);
+        int savedScentValue = PlayerPrefs.GetInt("ScentIntensity", 50);
+        currentScentPercent = savedScentValue;
 
         UpdateMinuteText();
         UpdateScentText();
     }
 
-    /*void Update()
+    void Update()
     {
         if (TestFrequencyRunning)
         {
             TestFrequencyTimer += Time.deltaTime;
-            if (TestFrequencyTimer > 3f)
+            if (TestFrequencyTimer > 5f)
             {
                 OlfactoryDeviceManager.StopAllPumps();
                 TestFrequencyRunning = false;
                 TestFrequencyTimer = 0f;
             }
         }
-    }*/
+    }
 
     // Zeit-Buttons
     public void OnTimeMinusClicked()
@@ -78,13 +78,12 @@ public class MenuManager : MonoBehaviour
     // Geruchs-Buttons
     public void OnScentMinusClicked()
     {
-        if (currentScentPercent > MIN_SCENT)
+        if (currentScentPercent >= MIN_SCENT + SCENT_STEP)
         {
             currentScentPercent -= SCENT_STEP;
             SaveScentValue();
             UpdateScentText();
         }
-
         if (!OlfactoryStarted)
         {
             OlfactoryDeviceManager.Open();
@@ -95,13 +94,12 @@ public class MenuManager : MonoBehaviour
 
     public void OnScentPlusClicked()
     {
-        if (currentScentPercent < MAX_SCENT)
+        if (currentScentPercent <= MAX_SCENT - SCENT_STEP)
         {
             currentScentPercent += SCENT_STEP;
             SaveScentValue();
             UpdateScentText();
         }
-
         if (!OlfactoryStarted)
         {
             OlfactoryDeviceManager.Open();
@@ -112,14 +110,14 @@ public class MenuManager : MonoBehaviour
 
     private void SaveTimeValue()
     {
-        PlayerPrefs.SetFloat("TimeValue", currentMinutes);
+        PlayerPrefs.SetInt("TimeValue", currentMinutes);
         PlayerPrefs.Save();
         Debug.Log("Zeit gespeichert: " + currentMinutes + " Minuten");
     }
 
     private void SaveScentValue()
     {
-        PlayerPrefs.SetFloat("ScentIntensity", currentScentPercent);
+        PlayerPrefs.SetInt("ScentIntensity", currentScentPercent);
         PlayerPrefs.Save();
         Debug.Log("Geruchsintensität gespeichert: " + currentScentPercent + "%");
     }
@@ -145,23 +143,21 @@ public class MenuManager : MonoBehaviour
         UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName);
     }
 
-    public static float GetTimeValue()
+    public static int GetTimeValue()
     {
-        return PlayerPrefs.GetFloat("TimeValue", 5.0f);
+        return PlayerPrefs.GetInt("TimeValue", 5);
     }
 
-    public static float GetScentIntensity()
+    public static int GetScentIntensity()
     {
-        return PlayerPrefs.GetFloat("ScentIntensity", 50.0f);
+        return PlayerPrefs.GetInt("ScentIntensity", 50);
     }
 
     public void TestFrequency()
     {
         OlfactoryDeviceManager.SetPump(1);
-        OlfactoryDeviceManager.SetFrequency(PlayerPrefs.GetFloat("ScentIntensity", 50.0f) * 1.5f);
+        OlfactoryDeviceManager.SetFrequency((double)(PlayerPrefs.GetInt("ScentIntensity", 50) * 1.5));
         OlfactoryDeviceManager.StartPump();
         TestFrequencyRunning = true;
-        System.Threading.Thread.Sleep(5000);
-        OlfactoryDeviceManager.StopAllPumps();
     }
 }
