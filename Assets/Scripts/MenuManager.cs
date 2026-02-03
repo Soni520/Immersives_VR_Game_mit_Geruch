@@ -146,11 +146,6 @@ public class MenuManager : MonoBehaviour
         GameObject.Find("SearchingObject").GetComponent<CanvasGroup>().alpha = 1;
     }
 
-    public void ChangeScene(string sceneName)
-    {
-        UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName);
-    }
-
     public static float GetTimeValue()
     {
         return PlayerPrefs.GetFloat("TimeValue", 1.0f);
