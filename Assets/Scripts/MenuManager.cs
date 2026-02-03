@@ -4,19 +4,17 @@ using TMPro;
 
 public class MenuManager : MonoBehaviour
 {
-    private ObjectScentManager ObjectScentManager;
     private OlfactoryDeviceManager OlfactoryDeviceManager;
 
     private void Awake()
     {
-        ObjectScentManager = GetComponent<ObjectScentManager>();
         OlfactoryDeviceManager = GetComponent<OlfactoryDeviceManager>();
     }
     public TextMeshProUGUI minute_text;
     public TextMeshProUGUI scent_text;
 
     private int currentMinutes = 5;
-    private int currentScentPercent = 100;
+    private int currentScentPercent = 50;
 
     private const int MIN_MINUTES = 1;
     private const int MAX_MINUTES = 10;
@@ -25,6 +23,8 @@ public class MenuManager : MonoBehaviour
     private const int SCENT_STEP = 10;
 
     private bool OlfactoryStarted = false;
+    private bool TestFrequencyRunning = false;
+    private float TestFrequencyTimer = 0f;
 
     void Start()
     {
@@ -40,27 +40,19 @@ public class MenuManager : MonoBehaviour
         UpdateScentText();
     }
 
-    void Update()
+    /*void Update()
     {
-        if (OVRInput.GetDown(OVRInput.Button.Start))
+        if (TestFrequencyRunning)
         {
-            GameObject.Find("MenuCanvas").GetComponent<CanvasGroup>().interactable = !GameObject.Find("MenuCanvas").GetComponent<CanvasGroup>().interactable;
-            GameObject.Find("MenuCanvas").GetComponent<CanvasGroup>().blocksRaycasts = !GameObject.Find("MenuCanvas").GetComponent<CanvasGroup>().blocksRaycasts;
-            if(GameObject.Find("MenuCanvas").GetComponent<CanvasGroup>().alpha == 0)
+            TestFrequencyTimer += Time.deltaTime;
+            if (TestFrequencyTimer > 3f)
             {
-                GameObject.Find("MenuCanvas").GetComponent<CanvasGroup>().alpha = 1;
-                ObjectScentManager.MenuOn = true;
-                GameObject.Find("SearchingObject").GetComponent<CanvasGroup>().alpha = 0;
-                
-            } else if(GameObject.Find("MenuCanvas").GetComponent<CanvasGroup>().alpha == 1)
-            {
-                GameObject.Find("MenuCanvas").GetComponent<CanvasGroup>().alpha = 0;
-                ObjectScentManager.MenuOn = false;
-                GameObject.Find("SearchingObject").GetComponent<CanvasGroup>().alpha = 1;
-                
+                OlfactoryDeviceManager.StopAllPumps();
+                TestFrequencyRunning = false;
+                TestFrequencyTimer = 0f;
             }
         }
-    }
+    }*/
 
     // Zeit-Buttons
     public void OnTimeMinusClicked()
@@ -120,16 +112,14 @@ public class MenuManager : MonoBehaviour
 
     private void SaveTimeValue()
     {
-        float normalizedValue = Mathf.InverseLerp(MIN_MINUTES, MAX_MINUTES, currentMinutes);
-        PlayerPrefs.SetFloat("TimeValue", normalizedValue);
+        PlayerPrefs.SetFloat("TimeValue", currentMinutes);
         PlayerPrefs.Save();
         Debug.Log("Zeit gespeichert: " + currentMinutes + " Minuten");
     }
 
     private void SaveScentValue()
     {
-        float normalizedValue = currentScentPercent / 100f;
-        PlayerPrefs.SetFloat("ScentIntensity", normalizedValue);
+        PlayerPrefs.SetFloat("ScentIntensity", currentScentPercent);
         PlayerPrefs.Save();
         Debug.Log("Geruchsintensität gespeichert: " + currentScentPercent + "%");
     }
@@ -155,22 +145,23 @@ public class MenuManager : MonoBehaviour
         UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName);
     }
 
-    public void GoBack()
-    {
-        GameObject.Find("MenuCanvas").GetComponent<CanvasGroup>().alpha = 0;
-        GameObject.Find("MenuCanvas").GetComponent<CanvasGroup>().interactable = false;
-        GameObject.Find("MenuCanvas").GetComponent<CanvasGroup>().blocksRaycasts = false;
-        ObjectScentManager.MenuOn = false;
-        GameObject.Find("SearchingObject").GetComponent<CanvasGroup>().alpha = 1;
-    }
-
     public static float GetTimeValue()
     {
-        return PlayerPrefs.GetFloat("TimeValue", 1.0f);
+        return PlayerPrefs.GetFloat("TimeValue", 5.0f);
     }
 
     public static float GetScentIntensity()
     {
-        return PlayerPrefs.GetFloat("ScentIntensity", 1.0f);
+        return PlayerPrefs.GetFloat("ScentIntensity", 50.0f);
+    }
+
+    public void TestFrequency()
+    {
+        OlfactoryDeviceManager.SetPump(1);
+        OlfactoryDeviceManager.SetFrequency(PlayerPrefs.GetFloat("ScentIntensity", 50.0f) * 1.5f);
+        OlfactoryDeviceManager.StartPump();
+        TestFrequencyRunning = true;
+        System.Threading.Thread.Sleep(5000);
+        OlfactoryDeviceManager.StopAllPumps();
     }
 }

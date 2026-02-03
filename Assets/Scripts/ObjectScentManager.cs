@@ -17,12 +17,13 @@ public class ObjectScentManager : MonoBehaviour
     private bool OlfactoryStarted = false;
     public bool MenuOn = false;
     private bool PumpOn = false;
-    private float MaxScentValue = PlayerPrefs.GetFloat("ScentIntensity", 1.0f) * 3.0f;
+    private float MaxScentValue = -1f;
 
     void Awake()
     {
         SearchLogicScript = GetComponent<search_logic>();
         OlfactoryDeviceManager = GetComponent<OlfactoryDeviceManager>();
+        MaxScentValue = PlayerPrefs.GetFloat("ScentIntensity", 1.0f) * 3.0f;
     }
 
     void Start()
@@ -48,7 +49,7 @@ public class ObjectScentManager : MonoBehaviour
                 SetFrequency(NewFrequency);
                 CurrentFrequency = NewFrequency;
             }
-            TextField.text = CurrentPump + ", Frequency: " + CurrentFrequency.ToString() + ", Distance: " + FindNearestObject.Item2.ToString();
+            TextField.text = CurrentPump + ", Frequency: " + CurrentFrequency.ToString() + "PumpOn: " + PumpOn.ToString();
         }
         if (OlfactoryDeviceManager != null && MenuOn && PumpOn)
         {

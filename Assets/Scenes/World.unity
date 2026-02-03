@@ -587,9 +587,9 @@ GameObject:
   m_Component:
   - component: {fileID: 319113961}
   - component: {fileID: 319113963}
-  - component: {fileID: 319113962}
   - component: {fileID: 319113960}
-  - component: {fileID: 319113964}
+  - component: {fileID: 319113966}
+  - component: {fileID: 319113965}
   m_Layer: 0
   m_Name: ScentManager
   m_TagString: Untagged
@@ -628,29 +628,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &319113962
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 319113959}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d567887ddbceace449213cf544056569, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::search_logic
-  uiText: {fileID: 0}
-  player: {fileID: 0}
-  spawnPositions:
-  - {x: 232, y: 64, z: -166}
-  - {x: -382, y: 43, z: -297}
-  spawnableObjects:
-  - {fileID: 8082149738491510997, guid: 44c6e3417f434f84ebe7dc2fa9c1080b, type: 3}
-  - {fileID: 3518323221077183279, guid: c7aaf75dba7fc354f814fd7315d930ca, type: 3}
-  timeUntilHint: 10
-  particleTrailPrefab: {fileID: 0}
-  spawnedObjects: []
 --- !u!114 &319113963
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -668,7 +645,7 @@ MonoBehaviour:
   _stopBits: 1
   _parity: 0
   TextField: {fileID: 1098828941}
---- !u!114 &319113964
+--- !u!114 &319113965
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -677,9 +654,36 @@ MonoBehaviour:
   m_GameObject: {fileID: 319113959}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a575a444778da74283b9cfac353558a, type: 3}
+  m_Script: {fileID: 11500000, guid: d95bb03dfe290564f8ab075a0d359444, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MenuManager
+  m_EditorClassIdentifier: Assembly-CSharp::search_logic
+  uiText: {fileID: 0}
+  Player: {fileID: 1505174179}
+  spawnPositions:
+  - {x: -7, y: 38, z: -30}
+  - {x: -41, y: 29, z: 0}
+  - {x: -10, y: 41, z: 50}
+  - {x: 41, y: 38, z: 0}
+  spawnableObjects:
+  - {fileID: 3518323221077183279, guid: c7aaf75dba7fc354f814fd7315d930ca, type: 3}
+  - {fileID: 2558290606065680355, guid: 397aadac1dbca484989b4895d9f52673, type: 3}
+  - {fileID: 3328223319462151241, guid: 15703fe816f0a484a93acdeaca13ba06, type: 3}
+  - {fileID: 8082149738491510997, guid: 44c6e3417f434f84ebe7dc2fa9c1080b, type: 3}
+  timeUntilHint: 10
+  particleTrailPrefab: {fileID: 8467232941717715954, guid: bac03e696621b204e99ed4c837c39eb0, type: 3}
+  spawnedObjects: []
+--- !u!114 &319113966
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 319113959}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f6cf0551052fd24c849b3f4ce947e5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WorldMenuManager
 --- !u!1 &328717763
 GameObject:
   m_ObjectHideFlags: 0
@@ -2163,7 +2167,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &917270421
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3222,8 +3226,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 319113964}
-        m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
+      - m_Target: {fileID: 319113966}
+        m_TargetAssemblyTypeName: WorldMenuManager, Assembly-CSharp
         m_MethodName: ChangeScene
         m_Mode: 5
         m_Arguments:
@@ -4810,8 +4814,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 319113964}
-        m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
+      - m_Target: {fileID: 319113966}
+        m_TargetAssemblyTypeName: WorldMenuManager, Assembly-CSharp
         m_MethodName: GoBack
         m_Mode: 1
         m_Arguments:

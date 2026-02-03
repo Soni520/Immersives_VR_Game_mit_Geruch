@@ -74,11 +74,6 @@ public class OlfactoryDeviceManager : MonoBehaviour
         return true;
     }
 
-    public void StartTest()
-    {
-        Write("setStatus:1");
-    }
-
     public bool StopAllPumps() 
     {
         for (int i = 0; i < 5; i++)
@@ -92,10 +87,5 @@ public class OlfactoryDeviceManager : MonoBehaviour
     void OnApplicationQuit()
     {
         StopAllPumps();
-    }
-
-    public void TestFrequency()
-    {
-        SetFrequency(PlayerPrefs.GetFloat("ScentIntensity", 1.0f) * 3.0);
     }
 }

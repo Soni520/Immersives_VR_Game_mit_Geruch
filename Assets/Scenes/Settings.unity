@@ -1181,7 +1181,7 @@ GameObject:
   - component: {fileID: 204319235}
   - component: {fileID: 204319234}
   m_Layer: 5
-  m_Name: Button (3)
+  m_Name: MeditationMinus
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1382,7 +1382,7 @@ GameObject:
   - component: {fileID: 239408978}
   - component: {fileID: 239408977}
   m_Layer: 5
-  m_Name: scent_text
+  m_Name: ScentText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1814,55 +1814,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 554564287}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &310831185
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 310831187}
-  - component: {fileID: 310831186}
-  m_Layer: 0
-  m_Name: OlfactoryDeviceManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &310831186
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 310831185}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bab7cd649468f564f8a3d72196c7e661, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::OlfactoryDeviceManager
-  _baudRate: 9600
-  _dataBits: 8
-  _stopBits: 1
-  _parity: 0
-  TextField: {fileID: 0}
---- !u!4 &310831187
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 310831185}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 12.56522, y: 0, z: 17.57848}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &319436168
 GameObject:
   m_ObjectHideFlags: 0
@@ -1876,7 +1827,7 @@ GameObject:
   - component: {fileID: 319436171}
   - component: {fileID: 319436170}
   m_Layer: 5
-  m_Name: Test intensity
+  m_Name: TestIntensity
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1946,33 +1897,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 310831186}
-        m_TargetAssemblyTypeName: OlfactoryDeviceManager, Assembly-CSharp
-        m_MethodName: SetPump
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 1
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 310831186}
-        m_TargetAssemblyTypeName: OlfactoryDeviceManager, Assembly-CSharp
+      - m_Target: {fileID: 1696229738}
+        m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
         m_MethodName: TestFrequency
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 310831186}
-        m_TargetAssemblyTypeName: OlfactoryDeviceManager, Assembly-CSharp
-        m_MethodName: StartTest
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4476,7 +4403,7 @@ GameObject:
   - component: {fileID: 675249533}
   - component: {fileID: 675249532}
   m_Layer: 5
-  m_Name: Button (2)
+  m_Name: ScentPlus
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11069,7 +10996,7 @@ GameObject:
   - component: {fileID: 1635689427}
   - component: {fileID: 1635689426}
   m_Layer: 5
-  m_Name: Button (4)
+  m_Name: MeditationPlus
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11387,6 +11314,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1696229739}
   - component: {fileID: 1696229738}
+  - component: {fileID: 1696229740}
   m_Layer: 0
   m_Name: MenuManager
   m_TagString: Untagged
@@ -11423,6 +11351,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1696229740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1696229737}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bab7cd649468f564f8a3d72196c7e661, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OlfactoryDeviceManager
+  _baudRate: 9600
+  _dataBits: 8
+  _stopBits: 1
+  _parity: 0
+  TextField: {fileID: 0}
 --- !u!1 &1697975922
 GameObject:
   m_ObjectHideFlags: 0
@@ -12926,7 +12871,7 @@ GameObject:
   - component: {fileID: 2074753223}
   - component: {fileID: 2074753222}
   m_Layer: 5
-  m_Name: minute_text
+  m_Name: MinuteText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13162,7 +13107,7 @@ GameObject:
   - component: {fileID: 2090559596}
   - component: {fileID: 2090559595}
   m_Layer: 5
-  m_Name: Button (1)
+  m_Name: ScentMinus
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13980,5 +13925,4 @@ SceneRoots:
   - {fileID: 584449115}
   - {fileID: 1295745701}
   - {fileID: 1507442031}
-  - {fileID: 310831187}
   - {fileID: 1696229739}

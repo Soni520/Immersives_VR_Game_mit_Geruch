@@ -11,7 +11,7 @@ public class search_logic : MonoBehaviour
 {
 
     public TextMeshProUGUI uiText;
-    public Transform player;
+    [SerializeField] private GameObject Player;
 
     public List<Vector3> spawnPositions;
     public List<GameObject> spawnableObjects;
@@ -81,7 +81,7 @@ public class search_logic : MonoBehaviour
 
         foreach (GameObject obj in spawnedObjects)
         {
-            float dist = Vector3.Distance(obj.transform.position, player.position);
+            float dist = Vector3.Distance(obj.transform.position, Player.transform.position);
             if (dist < nearestDist)
             {
                 nearest = obj;
@@ -154,20 +154,20 @@ public class search_logic : MonoBehaviour
     {
         hintActive = true;
 
-        if (particleTrailPrefab != null && player != null && targetObject != null)
+        if (particleTrailPrefab != null && Player != null && targetObject != null)
         {
-            activeParticleTrail = Instantiate(particleTrailPrefab, player.position, Quaternion.identity);
+            activeParticleTrail = Instantiate(particleTrailPrefab, Player.transform.position, Quaternion.identity);
             uiText.text = "Hint: Follow the particles!";
         }
     }
 
     void UpdateParticleTrail()
     {
-        if (player != null && targetObject != null)
+        if (Player != null && targetObject != null)
         {
-            activeParticleTrail.transform.position = player.position;
+            activeParticleTrail.transform.position = Player.transform.position;
 
-            Vector3 direction = (targetObject.transform.position - player.position).normalized;
+            Vector3 direction = (targetObject.transform.position - Player.transform.position).normalized;
             activeParticleTrail.transform.rotation = Quaternion.LookRotation(direction);
         }
     }
