@@ -22,38 +22,44 @@ public class search_logic : MonoBehaviour
 
     public List<GameObject> spawnedObjects = new List<GameObject>();
     private GameObject targetObject;
+    private GameObject previousTarget;
     private float searchTimer = 0f;
     private ParticleSystem activeParticleTrail;
     private bool hintActive = false;
 
-    // Start is called before the first frame update
     void Start()
     {
         SpawnObjects();
-
-        int randomObjectIndex = Random.Range(0, spawnedObjects.Count);
-        targetObject = spawnedObjects[randomObjectIndex];
-
-        HighlightObject(targetObject);
         searchTimer = 0f;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (targetObject != null)
+        if (spawnedObjects.Count == 0) return;
+
+        targetObject = GetNearestObject();
+
+        if (targetObject != previousTarget)
         {
-            searchTimer += Time.deltaTime;
-
-            if (!hintActive && searchTimer >= timeUntilHint)
+            // Highlight vom alten Objekt entfernen
+            if (previousTarget != null)
             {
-                ActivateHint();
+                RemoveHighlight(previousTarget);
             }
+            HighlightObject(targetObject);
+            previousTarget = targetObject;
+        }
 
-            if (hintActive && activeParticleTrail != null)
-            {
-                UpdateParticleTrail();
-            }
+        searchTimer += Time.deltaTime;
+
+        if (!hintActive && searchTimer >= timeUntilHint)
+        {
+            ActivateHint();
+        }
+
+        if (hintActive && activeParticleTrail != null)
+        {
+            UpdateParticleTrail();
         }
 
         if (Input.GetMouseButtonDown(0))
@@ -66,6 +72,23 @@ public class search_logic : MonoBehaviour
                 CheckIfTargetObject(hit.collider.gameObject);
             }
         }
+    }
+
+    GameObject GetNearestObject()
+    {
+        GameObject nearest = null;
+        float nearestDist = float.MaxValue;
+
+        foreach (GameObject obj in spawnedObjects)
+        {
+            float dist = Vector3.Distance(obj.transform.position, player.position);
+            if (dist < nearestDist)
+            {
+                nearest = obj;
+                nearestDist = dist;
+            }
+        }
+        return nearest;
     }
 
     void SpawnObjects()
@@ -110,15 +133,21 @@ public class search_logic : MonoBehaviour
     void HighlightObject(GameObject obj)
     {
         Renderer renderer = obj.GetComponent<Renderer>();
-        if (renderer == null)
-        {
-            Debug.LogError($"GameObject {obj.name} does not have a Renderer component!");
-            return;
-        }
+        if (renderer == null) return;
 
         Material mat = renderer.material;
         mat.EnableKeyword("_EMISSION");
         mat.SetColor("_EmissionColor", Color.yellow * 2f);
+    }
+
+    void RemoveHighlight(GameObject obj)
+    {
+        Renderer renderer = obj.GetComponent<Renderer>();
+        if (renderer == null) return;
+
+        Material mat = renderer.material;
+        mat.DisableKeyword("_EMISSION");
+        mat.SetColor("_EmissionColor", Color.black);
     }
 
     void ActivateHint()
@@ -129,10 +158,6 @@ public class search_logic : MonoBehaviour
         {
             activeParticleTrail = Instantiate(particleTrailPrefab, player.position, Quaternion.identity);
             uiText.text = "Hint: Follow the particles!";
-        }
-        else
-        {
-            Debug.LogWarning("Cannot activate hint: Missing particleTrailPrefab, player, or targetObject reference!");
         }
     }
 
@@ -150,6 +175,6 @@ public class search_logic : MonoBehaviour
     void changeScene(String sceneName)
     {
         SceneManager.LoadScene(sceneName);
-        
+
     }
 }

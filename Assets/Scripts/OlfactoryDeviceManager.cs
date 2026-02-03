@@ -1,5 +1,4 @@
 using System.Collections;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,7 +10,6 @@ public class OlfactoryDeviceManager : MonoBehaviour
     [SerializeField] private int _dataBits;
     [SerializeField] private int _stopBits;
     [SerializeField] private int _parity;
-    [SerializeField] private TextMeshProUGUI TextField;
 
 
     private void Awake()
@@ -30,15 +28,17 @@ public class OlfactoryDeviceManager : MonoBehaviour
 
     private void Start()
     {
+        Open();
+        Open();
 
     }
+
 
     public void Open()
     {
         if (_androidInstanceJavaObject != null)
         {
             _androidInstanceJavaObject.Call("openSerialPort", _baudRate, _dataBits, _stopBits, _parity);
-            TextField.text = "Connected";
         }
         else
         {
@@ -58,34 +58,19 @@ public class OlfactoryDeviceManager : MonoBehaviour
         }
     }
 
-    public void SetPump(int pump) 
+    public void StartPump(int pump) 
     {
         Write("setAPump:" + pump);
         Write("setF:75");
-    }
-
-    public void SetFrequency(double frequency)
-    {
-        Write("setF:" + frequency);
-    }
-    public bool StartPump()
-    {
         Write("setStatus:1");
-        return true;
     }
 
-    public bool StopAllPumps() 
+    public void StopAllPumps() 
     {
         for (int i = 0; i < 5; i++)
         {
             Write("setAPump:" + i);
             Write("setStatus:0");
         }
-        return false;
-    }
-
-    void OnApplicationQuit()
-    {
-        StopAllPumps();
     }
 }

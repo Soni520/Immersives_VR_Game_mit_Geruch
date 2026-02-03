@@ -1,5 +1,6 @@
 using System.Security.Cryptography;
 using UnityEngine;
+using TMPro;
 
 public class MenuManager : MonoBehaviour
 {
@@ -9,14 +10,32 @@ public class MenuManager : MonoBehaviour
     {
         ObjectScentManager = GetComponent<ObjectScentManager>();
     }
+    public TextMeshProUGUI minute_text;
+    public TextMeshProUGUI scent_text;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    private int currentMinutes = 5;
+    private int currentScentPercent = 100;
+
+    private const int MIN_MINUTES = 1;
+    private const int MAX_MINUTES = 10;
+    private const int MIN_SCENT = 0;
+    private const int MAX_SCENT = 100;
+    private const int SCENT_STEP = 10;
+
     void Start()
     {
 
+        // Gespeicherte Werte laden
+        float savedTimeValue = PlayerPrefs.GetFloat("TimeValue", 1.0f);
+        currentMinutes = Mathf.RoundToInt(Mathf.Lerp(MIN_MINUTES, MAX_MINUTES, savedTimeValue));
+
+        float savedScentValue = PlayerPrefs.GetFloat("ScentIntensity", 1.0f);
+        currentScentPercent = Mathf.RoundToInt(savedScentValue * 100f);
+
+        UpdateMinuteText();
+        UpdateScentText();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (OVRInput.GetDown(OVRInput.Button.Start))
@@ -39,6 +58,85 @@ public class MenuManager : MonoBehaviour
         }
     }
 
+    // Zeit-Buttons
+    public void OnTimeMinusClicked()
+    {
+        if (currentMinutes > MIN_MINUTES)
+        {
+            currentMinutes--;
+            SaveTimeValue();
+            UpdateMinuteText();
+        }
+    }
+
+    public void OnTimePlusClicked()
+    {
+        if (currentMinutes < MAX_MINUTES)
+        {
+            currentMinutes++;
+            SaveTimeValue();
+            UpdateMinuteText();
+        }
+    }
+
+    // Geruchs-Buttons
+    public void OnScentMinusClicked()
+    {
+        if (currentScentPercent > MIN_SCENT)
+        {
+            currentScentPercent -= SCENT_STEP;
+            SaveScentValue();
+            UpdateScentText();
+        }
+    }
+
+    public void OnScentPlusClicked()
+    {
+        if (currentScentPercent < MAX_SCENT)
+        {
+            currentScentPercent += SCENT_STEP;
+            SaveScentValue();
+            UpdateScentText();
+        }
+    }
+
+    private void SaveTimeValue()
+    {
+        float normalizedValue = Mathf.InverseLerp(MIN_MINUTES, MAX_MINUTES, currentMinutes);
+        PlayerPrefs.SetFloat("TimeValue", normalizedValue);
+        PlayerPrefs.Save();
+        Debug.Log("Zeit gespeichert: " + currentMinutes + " Minuten");
+    }
+
+    private void SaveScentValue()
+    {
+        float normalizedValue = currentScentPercent / 100f;
+        PlayerPrefs.SetFloat("ScentIntensity", normalizedValue);
+        PlayerPrefs.Save();
+        Debug.Log("Geruchsintensität gespeichert: " + currentScentPercent + "%");
+    }
+
+    void UpdateMinuteText()
+    {
+        if (minute_text != null)
+        {
+            minute_text.text = currentMinutes + " Minute" + (currentMinutes > 1 ? "n" : "");
+        }
+    }
+
+    void UpdateScentText()
+    {
+        if (scent_text != null)
+        {
+            scent_text.text = currentScentPercent + "%";
+        }
+    }
+
+    public void ChangeScene(string sceneName)
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName);
+    }
+
     public void GoBack()
     {
         GameObject.Find("MenuCanvas").GetComponent<CanvasGroup>().alpha = 0;
@@ -51,5 +149,15 @@ public class MenuManager : MonoBehaviour
     public void ChangeScene(string sceneName)
     {
         UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName);
+    }
+
+    public static float GetTimeValue()
+    {
+        return PlayerPrefs.GetFloat("TimeValue", 1.0f);
+    }
+
+    public static float GetScentIntensity()
+    {
+        return PlayerPrefs.GetFloat("ScentIntensity", 1.0f);
     }
 }
