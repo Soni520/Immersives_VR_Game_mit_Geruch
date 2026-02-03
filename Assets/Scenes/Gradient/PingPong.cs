@@ -9,7 +9,7 @@ public class PingPongVideo : MonoBehaviour
 
     void Start()
     {
-        videoPlayer.isLooping = false;
+        videoPlayer.isLooping = false; // wichtig!
         videoPlayer.loopPointReached += OnVideoEnd;
 
         PlayForward();
