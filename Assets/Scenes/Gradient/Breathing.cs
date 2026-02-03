@@ -1,21 +1,20 @@
 using UnityEngine;
-using UnityEngine.UI;
 
 public class BreathingFade : MonoBehaviour
 {
-    public Image overlayImage;
+    public Renderer sphereRenderer;
 
-    public float minAlpha = 0.0f;   // hell
-    public float maxAlpha = 0.6f;   // dunkel
-    public float breathingSpeed = 0.5f; // langsamer = ruhiger
+    public float minAlpha = 0.05f;
+    public float maxAlpha = 0.6f;
+    public float breathingSpeed = 0.2f;
 
     void Update()
     {
-        float t = (Mathf.Sin(Time.time * breathingSpeed * Mathf.PI * 2) + 1f) / 2f;
+        float t = Mathf.PingPong(Time.time * breathingSpeed, 1f);
         float alpha = Mathf.Lerp(minAlpha, maxAlpha, t);
 
-        Color c = overlayImage.color;
+        Color c = sphereRenderer.material.color;
         c.a = alpha;
-        overlayImage.color = c;
+        sphereRenderer.material.color = c;
     }
 }
