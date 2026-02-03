@@ -4,38 +4,43 @@ using UnityEngine.Video;
 public class PingPongVideo : MonoBehaviour
 {
     public VideoPlayer videoPlayer;
+    public float playbackSpeed = 1f;
 
     private bool forward = true;
 
     void Start()
     {
-        videoPlayer.isLooping = false; // wichtig!
-        videoPlayer.loopPointReached += OnVideoEnd;
-
-        PlayForward();
+        videoPlayer.isLooping = false;
+        videoPlayer.playOnAwake = false;
+        videoPlayer.Play();
     }
 
-    void OnVideoEnd(VideoPlayer vp)
+    void Update()
     {
-        forward = !forward;
+        if (!videoPlayer.isPrepared)
+            return;
+
+        double delta = Time.deltaTime * playbackSpeed;
 
         if (forward)
-            PlayForward();
+        {
+            videoPlayer.time += delta;
+
+            if (videoPlayer.time >= videoPlayer.length)
+            {
+                videoPlayer.time = videoPlayer.length;
+                forward = false;
+            }
+        }
         else
-            PlayBackward();
-    }
+        {
+            videoPlayer.time -= delta;
 
-    void PlayForward()
-    {
-        videoPlayer.playbackSpeed = 1f;
-        videoPlayer.time = 0;
-        videoPlayer.Play();
-    }
-
-    void PlayBackward()
-    {
-        videoPlayer.playbackSpeed = -1f;
-        videoPlayer.time = videoPlayer.length;
-        videoPlayer.Play();
+            if (videoPlayer.time <= 0)
+            {
+                videoPlayer.time = 0;
+                forward = true;
+            }
+        }
     }
 }

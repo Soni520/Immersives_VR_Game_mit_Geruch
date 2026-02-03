@@ -6,15 +6,15 @@ public class BreathingFade : MonoBehaviour
 
     public float minAlpha = 0.05f;
     public float maxAlpha = 0.6f;
-    public float breathingSpeed = 0.2f;
+    public float speed = 0.2f;
 
     void Update()
     {
-        float t = Mathf.PingPong(Time.time * breathingSpeed, 1f);
-        float alpha = Mathf.Lerp(minAlpha, maxAlpha, t);
+        float t = Mathf.PingPong(Time.time * speed, 1f);
+        float a = Mathf.Lerp(minAlpha, maxAlpha, t);
 
         Color c = sphereRenderer.material.color;
-        c.a = alpha;
+        c.a = a;
         sphereRenderer.material.color = c;
     }
 }
