@@ -5,10 +5,14 @@ using TMPro;
 public class WorldMenuManager : MonoBehaviour
 {
     private ObjectScentManager ObjectScentManager;
+    private GameObject MenuCanvas;
+    private GameObject SearchingObject;
 
     private void Awake()
     {
         ObjectScentManager = GetComponent<ObjectScentManager>();
+        MenuCanvas = GameObject.Find("MenuCanvas");
+        SearchingObject = GameObject.Find("SearchingObject");
     }
 
     void Update()
@@ -22,16 +26,16 @@ public class WorldMenuManager : MonoBehaviour
                 //GameObject.Find("MenuCanvas").GetComponent<CanvasGroup>().alpha = 1;
                 //GameObject.Find("ISDK_RayCanvasInteraction_Menu").GetComponent<CanvasGroup>().enabled = true;
                 ObjectScentManager.MenuOn = true;
-                GameObject.Find("MenuCanvas").GetComponent<RectTransform>().SetPositionAndRotation(new Vector3(0, 0, 1.75f), Quaternion.Euler(0, 0, 0));
-                GameObject.Find("SearchingObject").GetComponent<CanvasGroup>().alpha = 0;
+                MenuCanvas.GetComponent<RectTransform>().position = new Vector3(0, 0, 1.75f);
+                SearchingObject.GetComponent<CanvasGroup>().alpha = 0;
                 
             } else if(ObjectScentManager.MenuOn)
             {
                 //GameObject.Find("MenuCanvas").GetComponent<CanvasGroup>().alpha = 0;
                 //GameObject.Find("ISDK_RayCanvasInteraction_Menu").GetComponent<CanvasGroup>().enabled = false;
                 ObjectScentManager.MenuOn = false;
-                GameObject.Find("SearchingObject").GetComponent<CanvasGroup>().alpha = 1;
-                GameObject.Find("MenuCanvas").GetComponent<RectTransform>().SetPositionAndRotation(new Vector3(0, 0, -2f), Quaternion.Euler(0, 0, 0));
+                SearchingObject.GetComponent<CanvasGroup>().alpha = 1;
+                MenuCanvas.GetComponent<RectTransform>().position = new Vector3(0, 0, -2f);
             }
         }
     }
@@ -48,7 +52,7 @@ public class WorldMenuManager : MonoBehaviour
         //GameObject.Find("MenuCanvas").GetComponent<CanvasGroup>().interactable = false;
         //GameObject.Find("MenuCanvas").GetComponent<CanvasGroup>().blocksRaycasts = false;
         ObjectScentManager.MenuOn = false;
-        GameObject.Find("SearchingObject").GetComponent<CanvasGroup>().alpha = 1;
-        GameObject.Find("MenuCanvas").GetComponent<RectTransform>().SetPositionAndRotation(new Vector3(0, 0, -2f), Quaternion.Euler(0, 0, 0));
+        SearchingObject.GetComponent<CanvasGroup>().alpha = 1;
+        MenuCanvas.GetComponent<RectTransform>().position = new Vector3(0, 0, -2f);
     }
 }
