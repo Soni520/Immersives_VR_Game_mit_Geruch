@@ -1,28 +1,28 @@
 using UnityEngine;
 using UnityEngine.Video;
-using System.Collections.Generic;
 
-public class VideoManager : MonoBehaviour
+public class VideoPingPongDual : MonoBehaviour
 {
-    public VideoPlayer videoPlayer;
-    public List<VideoClip> videoClips;
-    private int currentClipIndex = 0;
+    public VideoPlayer forward;
+    public VideoPlayer backward;
 
     void Start()
     {
-        videoPlayer.loopPointReached += OnVideoFinished;
-        PlayCurrentVideo();
+        forward.loopPointReached += OnForwardEnd;
+        backward.loopPointReached += OnBackwardEnd;
+
+        forward.Play();
     }
 
-    void OnVideoFinished(VideoPlayer vp)
+    void OnForwardEnd(VideoPlayer vp)
     {
-        currentClipIndex = (currentClipIndex + 1) % videoClips.Count;
-        PlayCurrentVideo();
+        forward.Stop();
+        backward.Play();
     }
 
-    void PlayCurrentVideo()
+    void OnBackwardEnd(VideoPlayer vp)
     {
-        videoPlayer.clip = videoClips[currentClipIndex];
-        videoPlayer.Play();
+        backward.Stop();
+        forward.Play();
     }
 }
