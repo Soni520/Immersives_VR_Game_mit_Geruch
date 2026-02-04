@@ -1,7 +1,9 @@
+using System;
 using System.Collections.Generic;
 using TMPro;
-using UnityEngine;
 using Unity.VisualScripting;
+using UnityEngine;
+using UnityEngine.UIElements;
 
 public class ObjectScentManager : MonoBehaviour
 {
@@ -11,6 +13,10 @@ public class ObjectScentManager : MonoBehaviour
     private string CurrentPump = null;
     private double CurrentFrequency = -1.0;
     [SerializeField] private TextMeshProUGUI TextField;
+    [SerializeField] private TextMeshProUGUI FruitField;
+    private bool OlfactoryStarted = false;
+    public bool MenuOn = false;
+    private bool PumpOn = false;
 
     void Awake()
     {
@@ -20,16 +26,16 @@ public class ObjectScentManager : MonoBehaviour
 
     void Start()
     {
-        
+
     }
 
     void Update()
     {
-        if (SearchLogicScript != null && Player != null)
+        if (OlfactoryDeviceManager != null && SearchLogicScript != null && Player != null && !MenuOn)
         {
             var FindNearestObject = NearestObject();
             string NewPump = FindNearestObject.Item1.name;
-            double NewFrequency = (-FindNearestObject.Item2 / 3.5 + 200);
+            double NewFrequency = Math.Round((-FindNearestObject.Item2 / 3.4 + 150) / 10) * 10;
 
             if (CurrentPump != NewPump)
             {
@@ -42,6 +48,11 @@ public class ObjectScentManager : MonoBehaviour
                 CurrentFrequency = NewFrequency;
             }
             //TextField.text = CurrentPump + ", Frequency: " + CurrentFrequency.ToString() + ", Distance: " + FindNearestObject.Item2.ToString();
+        }
+        if (OlfactoryDeviceManager != null && MenuOn && PumpOn)
+        {
+            PumpOn = OlfactoryDeviceManager.StopAllPumps();
+            CurrentPump = null;
         }
     }
 
@@ -64,33 +75,44 @@ public class ObjectScentManager : MonoBehaviour
 
     private void SetScent(string Pump)
     {
+        if (!OlfactoryStarted)
+        {
+            OlfactoryDeviceManager.Open();
+            OlfactoryDeviceManager.Open();
+            OlfactoryStarted = true;
+        }
+
         switch (Pump)
         {
-            case "Watermelon":
+            case "Watermelon(Clone)":
                 OlfactoryDeviceManager.SetPump(1);
+                FruitField.text = "Find the Watermelon";
                 break;
-            case "Lemon":
+            case "Coconut(Clone)":
                 OlfactoryDeviceManager.SetPump(2);
+                FruitField.text = "Find the Coconut";
                 break;
-            case "Pineapple":
+            case "Lemon(Clone)":
                 OlfactoryDeviceManager.SetPump(3);
+                FruitField.text = "Find the Lemon";
                 break;
-            case "Coconut":
+            case "Pineapple(Clone)":
                 OlfactoryDeviceManager.SetPump(4);
+                FruitField.text = "Find the Pineapple";
                 break;
 
         }
+        PumpOn = OlfactoryDeviceManager.StartPump();
     }
 
     private void SetFrequency(double Frequency)
     {
-        if (Frequency > 0)
+        if (0 <= Frequency && Frequency <= 150)
         {
             OlfactoryDeviceManager.SetFrequency(Frequency);
         }else
         {
             OlfactoryDeviceManager.SetFrequency(0);
         }
-        OlfactoryDeviceManager.StartPump();
     }
 }
