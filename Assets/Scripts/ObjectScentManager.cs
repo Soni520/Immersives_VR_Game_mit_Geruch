@@ -41,7 +41,7 @@ public class ObjectScentManager : MonoBehaviour
                 SetFrequency(NewFrequency);
                 CurrentFrequency = NewFrequency;
             }
-            TextField.text = CurrentPump + ", Frequency: " + CurrentFrequency.ToString() + ", Distance: " + FindNearestObject.Item2.ToString();
+            //TextField.text = CurrentPump + ", Frequency: " + CurrentFrequency.ToString() + ", Distance: " + FindNearestObject.Item2.ToString();
         }
     }
 
@@ -49,7 +49,8 @@ public class ObjectScentManager : MonoBehaviour
     {
         GameObject ReturnObject = null;
         float NearestDistance = float.MaxValue;
-        foreach (GameObject gameObject in SearchLogicScript.spawnableObjects)
+        TextField.text = "Anzahl Objekte" + SearchLogicScript.spawnedObjects.Count;
+        foreach (GameObject gameObject in SearchLogicScript.spawnedObjects)
         {
             float TempDistance = Vector3.Distance(gameObject.transform.position, Player.transform.position);
             if (TempDistance < NearestDistance)
