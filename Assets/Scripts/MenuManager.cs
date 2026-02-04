@@ -142,14 +142,8 @@ private void Awake()
 
     public void TestFrequency()
     {
-        if (!OlfactoryStarted)
-        {
-            OlfactoryDeviceManager.Open();
-            OlfactoryDeviceManager.Open();
-            OlfactoryDeviceManager.Open();
-            OlfactoryDeviceManager.Open();
-            OlfactoryStarted = true;
-        }
+        OlfactoryDeviceManager.Open();
+        OlfactoryDeviceManager.Open();
         OlfactoryDeviceManager.SetPump(1);
         OlfactoryDeviceManager.SetFrequency((double)(PlayerPrefs.GetInt("ScentIntensity", 50) * 1.5));
         OlfactoryDeviceManager.StartPump();

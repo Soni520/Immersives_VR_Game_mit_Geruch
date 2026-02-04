@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3676499857532543300}
   - component: {fileID: 1645059525088458419}
   - component: {fileID: 916189309814878145}
+  - component: {fileID: -7162903724194937265}
   m_Layer: 0
   m_Name: Coconut
   m_TagString: Untagged
@@ -89,3 +90,24 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &-7162903724194937265
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3328223319462151241}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.8471373, y: 0.8410863, z: 1.0104641}
+  m_Center: {x: 0, y: 0, z: 0}
