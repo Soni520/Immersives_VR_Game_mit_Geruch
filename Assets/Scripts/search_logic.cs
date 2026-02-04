@@ -24,10 +24,14 @@ public class search_logic : MonoBehaviour
     public OVRInput.Controller rightController = OVRInput.Controller.RTouch;
     public OVRInput.Controller leftController = OVRInput.Controller.LTouch;
     public float rayDistance = 10f;
-    public LayerMask raycastLayerMask = ~0; // Alle Layer
+    public LayerMask raycastLayerMask = ~0;
 
     [Header("Scene Settings")]
     public string targetSceneName = "meditation_scene";
+
+    [Header("Debug Settings")]
+    public TextMeshProUGUI debugText; // Zusätzliches Text-Feld für Debug-Info
+    public bool showDebug = true;
 
     public List<GameObject> spawnedObjects = new List<GameObject>();
     private GameObject targetObject;
@@ -36,42 +40,46 @@ public class search_logic : MonoBehaviour
     private ParticleSystem activeParticleTrail;
     private bool hintActive = false;
 
-    // Referenzen zu den VR Controllern
     private Transform rightControllerTransform;
     private Transform leftControllerTransform;
+
+    private List<string> debugMessages = new List<string>();
+    private int maxDebugMessages = 10;
 
     void Start()
     {
         SpawnObjects();
         searchTimer = 0f;
-
-        // Finde die Controller Transforms
         FindControllerTransforms();
+
+        AddDebugMessage($"Started! Spawned {spawnedObjects.Count} objects");
     }
 
     void FindControllerTransforms()
     {
-        // Suche nach den OVR Controller Anchors
         OVRCameraRig cameraRig = FindObjectOfType<OVRCameraRig>();
         if (cameraRig != null)
         {
             rightControllerTransform = cameraRig.rightHandAnchor;
             leftControllerTransform = cameraRig.leftHandAnchor;
-            Debug.Log("Controllers found!");
+            AddDebugMessage("Controllers found!");
         }
         else
         {
-            Debug.LogWarning("OVRCameraRig not found!");
+            AddDebugMessage("ERROR: OVRCameraRig not found!");
         }
     }
 
     void Update()
     {
-        if (spawnedObjects.Count == 0) return;
+        if (spawnedObjects.Count == 0)
+        {
+            AddDebugMessage("WARNING: No spawned objects!");
+            return;
+        }
 
         GameObject currentNearest = GetNearestObject();
 
-        // Prüfe ob sich das nächste Objekt geändert hat
         if (currentNearest != targetObject)
         {
             searchTimer = 0f;
@@ -81,22 +89,21 @@ public class search_logic : MonoBehaviour
                 Destroy(activeParticleTrail.gameObject);
                 activeParticleTrail = null;
                 hintActive = false;
-                uiText.text = ""; // Optional: Text zurücksetzen
+                uiText.text = "";
             }
 
             targetObject = currentNearest;
         }
-        /*
+
         if (targetObject != previousTarget)
         {
-            // Highlight vom alten Objekt entfernen
             if (previousTarget != null)
             {
                 RemoveHighlight(previousTarget);
             }
             HighlightObject(targetObject);
             previousTarget = targetObject;
-        }*/
+        }
 
         searchTimer += Time.deltaTime;
 
@@ -114,17 +121,19 @@ public class search_logic : MonoBehaviour
         if (OVRInput.GetDown(OVRInput.Button.One, rightController) ||
             OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, rightController) > 0.5f)
         {
-            CheckControllerRaycast(rightControllerTransform);
+            AddDebugMessage("RIGHT trigger pressed!");
+            CheckControllerRaycast(rightControllerTransform, "RIGHT");
         }
 
         // VR Controller Raycast für linken Controller
         if (OVRInput.GetDown(OVRInput.Button.One, leftController) ||
             OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, leftController) > 0.5f)
         {
-            CheckControllerRaycast(leftControllerTransform);
+            AddDebugMessage("LEFT trigger pressed!");
+            CheckControllerRaycast(leftControllerTransform, "LEFT");
         }
 
-        // Fallback für Editor-Testing mit Maus
+        // Fallback für Editor-Testing
         if (Input.GetMouseButtonDown(0))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -132,35 +141,49 @@ public class search_logic : MonoBehaviour
 
             if (Physics.Raycast(ray, out hit))
             {
+                AddDebugMessage($"Mouse hit: {hit.collider.gameObject.name}");
                 CheckIfSpawnedObject(hit.collider.gameObject);
             }
         }
+
+        UpdateDebugDisplay();
     }
 
-    void CheckControllerRaycast(Transform controllerTransform)
+    void CheckControllerRaycast(Transform controllerTransform, string controllerName)
     {
-        if (controllerTransform == null) return;
+        if (controllerTransform == null)
+        {
+            AddDebugMessage($"{controllerName}: Transform NULL!");
+            return;
+        }
 
         Ray ray = new Ray(controllerTransform.position, controllerTransform.forward);
         RaycastHit hit;
 
-        Debug.DrawRay(ray.origin, ray.direction * rayDistance, Color.red, 0.5f);
-
         if (Physics.Raycast(ray, out hit, rayDistance, raycastLayerMask))
         {
-            Debug.Log("Controller hit: " + hit.collider.gameObject.name);
+            AddDebugMessage($"{controllerName} HIT: {hit.collider.gameObject.name} (dist: {hit.distance:F2})");
             CheckIfSpawnedObject(hit.collider.gameObject);
+        }
+        else
+        {
+            AddDebugMessage($"{controllerName}: No hit (range: {rayDistance}m)");
         }
     }
 
     void CheckIfSpawnedObject(GameObject hitObject)
     {
-        // Prüfe ob das getroffene Objekt in der Liste der gespawnten Objekte ist
+        AddDebugMessage($"Checking: {hitObject.name}");
+
         if (spawnedObjects.Contains(hitObject))
         {
-            Debug.Log("Spawned object hit: " + hitObject.name);
+            AddDebugMessage($"SUCCESS! Scene change!");
             uiText.text = "Object touched!";
             OnObjectTouched(hitObject);
+        }
+        else
+        {
+            AddDebugMessage($"NOT spawned object");
         }
     }
 
@@ -276,5 +299,26 @@ public class search_logic : MonoBehaviour
     void changeScene(String sceneName)
     {
         SceneManager.LoadScene(sceneName);
+    }
+
+    // Debug-Funktionen
+    void AddDebugMessage(string message)
+    {
+        if (!showDebug) return;
+
+        debugMessages.Add($"[{Time.time:F1}] {message}");
+        if (debugMessages.Count > maxDebugMessages)
+        {
+            debugMessages.RemoveAt(0);
+        }
+
+        Debug.Log(message); // Auch in normale Console
+    }
+
+    void UpdateDebugDisplay()
+    {
+        if (!showDebug || debugText == null) return;
+
+        debugText.text = "=== DEBUG ===\n" + string.Join("\n", debugMessages);
     }
 }
