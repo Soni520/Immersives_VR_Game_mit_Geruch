@@ -20,8 +20,14 @@ public class search_logic : MonoBehaviour
     public float timeUntilHint = 10f;
     public ParticleSystem particleTrailPrefab;
 
-    [Header("Trigger Settings")]
-    public string triggerSceneName = "meditation_scene";
+    [Header("VR Controller Settings")]
+    public OVRInput.Controller rightController = OVRInput.Controller.RTouch;
+    public OVRInput.Controller leftController = OVRInput.Controller.LTouch;
+    public float rayDistance = 10f;
+    public LayerMask raycastLayerMask = ~0; // Alle Layer
+
+    [Header("Scene Settings")]
+    public string targetSceneName = "meditation_scene";
 
     public List<GameObject> spawnedObjects = new List<GameObject>();
     private GameObject targetObject;
@@ -30,16 +36,32 @@ public class search_logic : MonoBehaviour
     private ParticleSystem activeParticleTrail;
     private bool hintActive = false;
 
+    // Referenzen zu den VR Controllern
+    private Transform rightControllerTransform;
+    private Transform leftControllerTransform;
+
     void Start()
     {
         SpawnObjects();
         searchTimer = 0f;
 
-        // Füge TriggerHandler-Komponente zu gespawnten Objekten hinzu
-        foreach (GameObject obj in spawnedObjects)
+        // Finde die Controller Transforms
+        FindControllerTransforms();
+    }
+
+    void FindControllerTransforms()
+    {
+        // Suche nach den OVR Controller Anchors
+        OVRCameraRig cameraRig = FindObjectOfType<OVRCameraRig>();
+        if (cameraRig != null)
         {
-            TriggerHandler handler = obj.AddComponent<TriggerHandler>();
-            handler.Initialize(this);
+            rightControllerTransform = cameraRig.rightHandAnchor;
+            leftControllerTransform = cameraRig.leftHandAnchor;
+            Debug.Log("Controllers found!");
+        }
+        else
+        {
+            Debug.LogWarning("OVRCameraRig not found!");
         }
     }
 
@@ -72,6 +94,21 @@ public class search_logic : MonoBehaviour
             UpdateParticleTrail();
         }
 
+        // VR Controller Raycast für rechten Controller
+        if (OVRInput.GetDown(OVRInput.Button.One, rightController) ||
+            OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, rightController) > 0.5f)
+        {
+            CheckControllerRaycast(rightControllerTransform);
+        }
+
+        // VR Controller Raycast für linken Controller
+        if (OVRInput.GetDown(OVRInput.Button.One, leftController) ||
+            OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, leftController) > 0.5f)
+        {
+            CheckControllerRaycast(leftControllerTransform);
+        }
+
+        // Fallback für Editor-Testing mit Maus
         if (Input.GetMouseButtonDown(0))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -79,9 +116,47 @@ public class search_logic : MonoBehaviour
 
             if (Physics.Raycast(ray, out hit))
             {
-                CheckIfTargetObject(hit.collider.gameObject);
+                CheckIfSpawnedObject(hit.collider.gameObject);
             }
         }
+    }
+
+    void CheckControllerRaycast(Transform controllerTransform)
+    {
+        if (controllerTransform == null) return;
+
+        Ray ray = new Ray(controllerTransform.position, controllerTransform.forward);
+        RaycastHit hit;
+
+        Debug.DrawRay(ray.origin, ray.direction * rayDistance, Color.red, 0.5f);
+
+        if (Physics.Raycast(ray, out hit, rayDistance, raycastLayerMask))
+        {
+            Debug.Log("Controller hit: " + hit.collider.gameObject.name);
+            CheckIfSpawnedObject(hit.collider.gameObject);
+        }
+    }
+
+    void CheckIfSpawnedObject(GameObject hitObject)
+    {
+        // Prüfe ob das getroffene Objekt in der Liste der gespawnten Objekte ist
+        if (spawnedObjects.Contains(hitObject))
+        {
+            Debug.Log("Spawned object hit: " + hitObject.name);
+            uiText.text = "Object touched!";
+            OnObjectTouched(hitObject);
+        }
+    }
+
+    void OnObjectTouched(GameObject touchedObject)
+    {
+        if (activeParticleTrail != null)
+        {
+            Destroy(activeParticleTrail.gameObject);
+            activeParticleTrail = null;
+        }
+        hintActive = false;
+        changeScene(targetSceneName);
     }
 
     GameObject GetNearestObject()
@@ -140,13 +215,6 @@ public class search_logic : MonoBehaviour
         changeScene("meditation_scene");
     }
 
-    // Diese Methode wird vom TriggerHandler aufgerufen
-    public void OnObjectTriggered(GameObject triggeredObject)
-    {
-        uiText.text = "Object touched!";
-        changeScene(triggerSceneName);
-    }
-
     void HighlightObject(GameObject obj)
     {
         Renderer renderer = obj.GetComponent<Renderer>();
@@ -192,28 +260,5 @@ public class search_logic : MonoBehaviour
     void changeScene(String sceneName)
     {
         SceneManager.LoadScene(sceneName);
-    }
-}
-
-// Hilfs-Komponente für Trigger-Events
-public class TriggerHandler : MonoBehaviour
-{
-    private search_logic searchLogic;
-
-    public void Initialize(search_logic logic)
-    {
-        searchLogic = logic;
-    }
-
-    void OnTriggerEnter(Collider other)
-    {
-        // Prüfe ob der Player-Controller den Trigger berührt
-        if (other.CompareTag("Player") || other.gameObject.name.Contains("Player"))
-        {
-            if (searchLogic != null)
-            {
-                searchLogic.OnObjectTriggered(gameObject);
-            }
-        }
     }
 }
