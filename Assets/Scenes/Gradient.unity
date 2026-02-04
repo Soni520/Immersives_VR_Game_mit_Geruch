@@ -437,6 +437,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 372571296}
   m_CullTransparentMesh: 1
+--- !u!1 &391466619
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 391466621}
+  - component: {fileID: 391466620}
+  m_Layer: 0
+  m_Name: GradientMenuManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &391466620
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 391466619}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7f488c4d1daf8842ac8f88bf91e4f0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GradientMenuManager
+--- !u!4 &391466621
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 391466619}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.03325, y: 0, z: -0.19326}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &433114171
 GameObject:
   m_ObjectHideFlags: 0
@@ -1809,7 +1853,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1981530073}
+      - m_Target: {fileID: 391466620}
         m_TargetAssemblyTypeName: GradientMenuManager, Assembly-CSharp
         m_MethodName: ChangeScene
         m_Mode: 5
@@ -2975,7 +3019,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::VideoManager
   videoPlayer: {fileID: 1627722600}
-  playbackSpeed: 1
+  videoClips: []
 --- !u!1 &1652023002
 GameObject:
   m_ObjectHideFlags: 0
@@ -3007,9 +3051,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1346839137}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  videoClips:
-  - {fileID: 32900000, guid: 4eef48d259230af49b350554a29d1775, type: 3}
-  - {fileID: 32900000, guid: c617210cad9c21342b4f632927149a4f, type: 3}
 --- !u!1 &1670460705
 GameObject:
   m_ObjectHideFlags: 0
@@ -3741,68 +3782,6 @@ Transform:
   - {fileID: 1093792573}
   m_Father: {fileID: 837725894}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1981530071
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1981530074}
-  - component: {fileID: 1981530073}
-  - component: {fileID: 1981530072}
-  m_Layer: 0
-  m_Name: GradientMenuManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1981530072
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1981530071}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bab7cd649468f564f8a3d72196c7e661, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::OlfactoryDeviceManager
-  _baudRate: 9600
-  _dataBits: 8
-  _stopBits: 1
-  _parity: 0
-  TextField: {fileID: 0}
---- !u!114 &1981530073
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1981530071}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b7f488c4d1daf8842ac8f88bf91e4f0f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GradientMenuManager
---- !u!4 &1981530074
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1981530071}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 11.74158, y: 0, z: 62.50812}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2024816082
 GameObject:
   m_ObjectHideFlags: 0
@@ -4053,7 +4032,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1981530073}
+      - m_Target: {fileID: 391466620}
         m_TargetAssemblyTypeName: GradientMenuManager, Assembly-CSharp
         m_MethodName: GoBack
         m_Mode: 1
@@ -4151,5 +4130,4 @@ SceneRoots:
   - {fileID: 1670460709}
   - {fileID: 1139074278}
   - {fileID: 900009513}
-  - {fileID: 1670460709}
-  - {fileID: 1981530074}
+  - {fileID: 391466621}

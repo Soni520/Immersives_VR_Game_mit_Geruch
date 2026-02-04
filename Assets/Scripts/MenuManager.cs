@@ -5,11 +5,6 @@ using TMPro;
 public class MenuManager : MonoBehaviour
 {
     private OlfactoryDeviceManager OlfactoryDeviceManager;
-
-    private void Awake()
-    {
-        OlfactoryDeviceManager = GetComponent<OlfactoryDeviceManager>();
-    }
     public TextMeshProUGUI minute_text;
     public TextMeshProUGUI scent_text;
 
@@ -26,6 +21,10 @@ public class MenuManager : MonoBehaviour
     private bool TestFrequencyRunning = false;
     private float TestFrequencyTimer = 0f;
 
+private void Awake()
+    {
+        OlfactoryDeviceManager = GetComponent<OlfactoryDeviceManager>();
+    }
     void Start()
     {
 
@@ -84,12 +83,6 @@ public class MenuManager : MonoBehaviour
             SaveScentValue();
             UpdateScentText();
         }
-        if (!OlfactoryStarted)
-        {
-            OlfactoryDeviceManager.Open();
-            OlfactoryDeviceManager.Open();
-            OlfactoryStarted = true;
-        }
     }
 
     public void OnScentPlusClicked()
@@ -99,12 +92,6 @@ public class MenuManager : MonoBehaviour
             currentScentPercent += SCENT_STEP;
             SaveScentValue();
             UpdateScentText();
-        }
-        if (!OlfactoryStarted)
-        {
-            OlfactoryDeviceManager.Open();
-            OlfactoryDeviceManager.Open();
-            OlfactoryStarted = true;
         }
     }
 
@@ -155,6 +142,14 @@ public class MenuManager : MonoBehaviour
 
     public void TestFrequency()
     {
+        if (!OlfactoryStarted)
+        {
+            OlfactoryDeviceManager.Open();
+            OlfactoryDeviceManager.Open();
+            OlfactoryDeviceManager.Open();
+            OlfactoryDeviceManager.Open();
+            OlfactoryStarted = true;
+        }
         OlfactoryDeviceManager.SetPump(1);
         OlfactoryDeviceManager.SetFrequency((double)(PlayerPrefs.GetInt("ScentIntensity", 50) * 1.5));
         OlfactoryDeviceManager.StartPump();

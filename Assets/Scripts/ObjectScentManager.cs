@@ -18,12 +18,14 @@ public class ObjectScentManager : MonoBehaviour
     public bool MenuOn = false;
     private bool PumpOn = false;
     private float MaxScentValue = -1f;
+    private double RoundValue = 10.0;
 
     void Awake()
     {
         SearchLogicScript = GetComponent<search_logic>();
         OlfactoryDeviceManager = GetComponent<OlfactoryDeviceManager>();
         MaxScentValue = PlayerPrefs.GetInt("ScentIntensity", 50) * 3.0f;
+        RoundValue = PlayerPrefs.GetInt("ScentIntensity", 50) / 5.0f;
     }
 
     void Start()
@@ -38,8 +40,7 @@ public class ObjectScentManager : MonoBehaviour
             var FindNearestObject = NearestObject();
             string NewPump = FindNearestObject.Item1.name;
             double FrequencyMultiplier = 500 / MaxScentValue;
-            double NewFrequency = Math.Round((-FindNearestObject.Item2 / FrequencyMultiplier + MaxScentValue) / 10) * 10;
-            NewFrequency = NewFrequency * (double)PlayerPrefs.GetInt("ScentIntensity", 50) / 50.0;
+            double NewFrequency = Math.Round((-FindNearestObject.Item2 / FrequencyMultiplier + MaxScentValue) / RoundValue) * RoundValue;
 
             if (CurrentPump != NewPump)
             {

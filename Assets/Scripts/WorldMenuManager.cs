@@ -5,14 +5,11 @@ using TMPro;
 public class WorldMenuManager : MonoBehaviour
 {
     private ObjectScentManager ObjectScentManager;
-    private OlfactoryDeviceManager OlfactoryDeviceManager;
 
     private void Awake()
     {
         ObjectScentManager = GetComponent<ObjectScentManager>();
-        OlfactoryDeviceManager = GetComponent<OlfactoryDeviceManager>();
     }
-    private bool OlfactoryStarted = false;
 
     void Update()
     {
