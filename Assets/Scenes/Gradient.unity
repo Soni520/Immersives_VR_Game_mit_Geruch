@@ -688,7 +688,7 @@ GameObject:
   - component: {fileID: 589865774}
   - component: {fileID: 589865773}
   m_Layer: 0
-  m_Name: ISDK_RayCanvasInteraction
+  m_Name: ISDK_RayCanvasInteraction_Menu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

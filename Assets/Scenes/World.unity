@@ -291,7 +291,7 @@ GameObject:
   - component: {fileID: 116578099}
   - component: {fileID: 116578098}
   m_Layer: 0
-  m_Name: ISDK_RayCanvasInteraction
+  m_Name: ISDK_RayCanvasInteraction_Menu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -671,6 +671,13 @@ MonoBehaviour:
   - {fileID: 8082149738491510997, guid: 44c6e3417f434f84ebe7dc2fa9c1080b, type: 3}
   timeUntilHint: 10
   particleTrailPrefab: {fileID: 8467232941717715954, guid: bac03e696621b204e99ed4c837c39eb0, type: 3}
+  rightController: 2
+  leftController: 1
+  rayDistance: 10
+  raycastLayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  targetSceneName: meditation_scene
   spawnedObjects: []
 --- !u!114 &319113966
 MonoBehaviour:
@@ -3640,6 +3647,14 @@ PrefabInstance:
       propertyPath: _centerEyeCamera
       value: 
       objectReference: {fileID: 131263642}
+    - target: {fileID: 3903482225804038118, guid: 0a7d2469f24041c4284c66706f84c45e, type: 3}
+      propertyPath: m_Center.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3903482225804038118, guid: 0a7d2469f24041c4284c66706f84c45e, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4148778239110795873, guid: 0a7d2469f24041c4284c66706f84c45e, type: 3}
       propertyPath: m_Name
       value: '[BuildingBlock] OVRInteractionComprehensive'

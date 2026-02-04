@@ -14,17 +14,19 @@ public class GradientMenuManager : MonoBehaviour
     {
         if (OVRInput.GetDown(OVRInput.Button.Start))
         {
-            GameObject.Find("MenuCanvas").GetComponent<CanvasGroup>().interactable = !GameObject.Find("MenuCanvas").GetComponent<CanvasGroup>().interactable;
-            GameObject.Find("MenuCanvas").GetComponent<CanvasGroup>().blocksRaycasts = !GameObject.Find("MenuCanvas").GetComponent<CanvasGroup>().blocksRaycasts;
+            //GameObject.Find("MenuCanvas").GetComponent<CanvasGroup>().interactable = !GameObject.Find("MenuCanvas").GetComponent<CanvasGroup>().interactable;
+            //GameObject.Find("MenuCanvas").GetComponent<CanvasGroup>().blocksRaycasts = !GameObject.Find("MenuCanvas").GetComponent<CanvasGroup>().blocksRaycasts;
             if(GameObject.Find("MenuCanvas").GetComponent<CanvasGroup>().alpha == 0)
             {
                 GameObject.Find("MenuCanvas").GetComponent<CanvasGroup>().alpha = 1;
+                GameObject.Find("ISDK_RayCanvasInteraction_Menu").GetComponent<CanvasGroup>().enabled = true;
                 OlfactoryDeviceManager.SetFrequency(0);
 
                 
             } else if(GameObject.Find("MenuCanvas").GetComponent<CanvasGroup>().alpha == 1)
             {
                 GameObject.Find("MenuCanvas").GetComponent<CanvasGroup>().alpha = 0;
+                GameObject.Find("ISDK_RayCanvasInteraction_Menu").GetComponent<CanvasGroup>().enabled = false;
                 OlfactoryDeviceManager.SetFrequency(PlayerPrefs.GetFloat("ScentIntensity", 1.0f) * 1.5f);
             }
         }
@@ -51,8 +53,9 @@ public class GradientMenuManager : MonoBehaviour
     public void GoBack()
     {
         GameObject.Find("MenuCanvas").GetComponent<CanvasGroup>().alpha = 0;
-        GameObject.Find("MenuCanvas").GetComponent<CanvasGroup>().interactable = false;
-        GameObject.Find("MenuCanvas").GetComponent<CanvasGroup>().blocksRaycasts = false;
+        GameObject.Find("ISDK_RayCanvasInteraction_Menu").GetComponent<CanvasGroup>().enabled = false;
+        //GameObject.Find("MenuCanvas").GetComponent<CanvasGroup>().interactable = false;
+        //GameObject.Find("MenuCanvas").GetComponent<CanvasGroup>().blocksRaycasts = false;
         OlfactoryDeviceManager.SetFrequency(PlayerPrefs.GetFloat("ScentIntensity", 1.0f) * 1.5f);
     }
 }
