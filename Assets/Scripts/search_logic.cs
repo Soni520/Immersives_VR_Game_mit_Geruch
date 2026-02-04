@@ -20,6 +20,9 @@ public class search_logic : MonoBehaviour
     public float timeUntilHint = 10f;
     public ParticleSystem particleTrailPrefab;
 
+    [Header("Trigger Settings")]
+    public string triggerSceneName = "meditation_scene";
+
     public List<GameObject> spawnedObjects = new List<GameObject>();
     private GameObject targetObject;
     private GameObject previousTarget;
@@ -31,6 +34,13 @@ public class search_logic : MonoBehaviour
     {
         SpawnObjects();
         searchTimer = 0f;
+
+        // Füge TriggerHandler-Komponente zu gespawnten Objekten hinzu
+        foreach (GameObject obj in spawnedObjects)
+        {
+            TriggerHandler handler = obj.AddComponent<TriggerHandler>();
+            handler.Initialize(this);
+        }
     }
 
     void Update()
@@ -125,9 +135,16 @@ public class search_logic : MonoBehaviour
         {
             Destroy(activeParticleTrail.gameObject);
             activeParticleTrail = null;
-            changeScene("meditation_scene");
         }
         hintActive = false;
+        changeScene("meditation_scene");
+    }
+
+    // Diese Methode wird vom TriggerHandler aufgerufen
+    public void OnObjectTriggered(GameObject triggeredObject)
+    {
+        uiText.text = "Object touched!";
+        changeScene(triggerSceneName);
     }
 
     void HighlightObject(GameObject obj)
@@ -175,6 +192,28 @@ public class search_logic : MonoBehaviour
     void changeScene(String sceneName)
     {
         SceneManager.LoadScene(sceneName);
+    }
+}
 
+// Hilfs-Komponente für Trigger-Events
+public class TriggerHandler : MonoBehaviour
+{
+    private search_logic searchLogic;
+
+    public void Initialize(search_logic logic)
+    {
+        searchLogic = logic;
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        // Prüfe ob der Player-Controller den Trigger berührt
+        if (other.CompareTag("Player") || other.gameObject.name.Contains("Player"))
+        {
+            if (searchLogic != null)
+            {
+                searchLogic.OnObjectTriggered(gameObject);
+            }
+        }
     }
 }
