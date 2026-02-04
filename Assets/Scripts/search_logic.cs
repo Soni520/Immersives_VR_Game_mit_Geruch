@@ -69,8 +69,24 @@ public class search_logic : MonoBehaviour
     {
         if (spawnedObjects.Count == 0) return;
 
-        targetObject = GetNearestObject();
+        GameObject currentNearest = GetNearestObject();
 
+        // Prüfe ob sich das nächste Objekt geändert hat
+        if (currentNearest != targetObject)
+        {
+            searchTimer = 0f;
+
+            if (hintActive && activeParticleTrail != null)
+            {
+                Destroy(activeParticleTrail.gameObject);
+                activeParticleTrail = null;
+                hintActive = false;
+                uiText.text = ""; // Optional: Text zurücksetzen
+            }
+
+            targetObject = currentNearest;
+        }
+        /*
         if (targetObject != previousTarget)
         {
             // Highlight vom alten Objekt entfernen
@@ -80,7 +96,7 @@ public class search_logic : MonoBehaviour
             }
             HighlightObject(targetObject);
             previousTarget = targetObject;
-        }
+        }*/
 
         searchTimer += Time.deltaTime;
 
