@@ -12,6 +12,7 @@ public class search_logic : MonoBehaviour
 
     public TextMeshProUGUI uiText;
     [SerializeField] private GameObject Player;
+    private OlfactoryDeviceManager OlfactoryDeviceManager;
 
     public List<Vector3> spawnPositions;
     public List<GameObject> spawnableObjects;
@@ -42,6 +43,8 @@ public class search_logic : MonoBehaviour
 
     private Transform rightControllerTransform;
     private Transform leftControllerTransform;
+    private LineRenderer rightRayLine;
+    private LineRenderer leftRayLine;
 
     private List<string> debugMessages = new List<string>();
     private int maxDebugMessages = 10;
@@ -55,6 +58,7 @@ public class search_logic : MonoBehaviour
 
         AddDebugMessage($"Started! Spawned {spawnedObjects.Count} objects");
         UpdateDebugDisplay();
+        OlfactoryDeviceManager = GetComponent<OlfactoryDeviceManager>();
     }
 
     void FindControllerTransforms()
@@ -64,6 +68,8 @@ public class search_logic : MonoBehaviour
         {
             rightControllerTransform = cameraRig.rightHandAnchor;
             leftControllerTransform = cameraRig.leftHandAnchor;
+            rightRayLine = CreateRayLine(rightControllerTransform, "RightRay");
+            leftRayLine = CreateRayLine(leftControllerTransform, "LeftRay");
             AddDebugMessage("Controllers found!");
         }
         else
@@ -149,6 +155,8 @@ public class search_logic : MonoBehaviour
             CheckControllerRaycast(leftControllerTransform, "LEFT");
         }
 
+        UpdateRayVisuals();
+
         // Fallback f�r Editor-Testing
         if (Input.GetMouseButtonDown(0))
         {
@@ -194,6 +202,7 @@ public class search_logic : MonoBehaviour
         if (spawnedObjects.Contains(hitObject))
         {
             AddDebugMessage($"SUCCESS! Scene change!");
+            OlfactoryDeviceManager.SetFrequency(PlayerPrefs.GetFloat("ScentIntensity", 50) * 1.5f);
             SceneManager.LoadScene("Gradient");
             uiText.text = "Object touched!";
             OnObjectTouched(hitObject);
@@ -337,5 +346,51 @@ public class search_logic : MonoBehaviour
         if (!showDebug || debugText == null) return;
 
         debugText.text = "=== DEBUG ===\n" + string.Join("\n", debugMessages);
+    }
+
+    LineRenderer CreateRayLine(Transform parent, string name)
+    {
+        GameObject rayObj = new GameObject(name);
+        rayObj.transform.SetParent(parent, false);
+        LineRenderer lr = rayObj.AddComponent<LineRenderer>();
+        lr.startWidth = 0.005f;
+        lr.endWidth = 0.005f;
+        lr.positionCount = 2;
+        lr.material = new Material(Shader.Find("Sprites/Default"));
+        lr.startColor = Color.white;
+        lr.endColor = Color.white;
+        lr.useWorldSpace = true;
+        return lr;
+    }
+
+    void UpdateRayVisuals()
+    {
+        UpdateSingleRay(rightControllerTransform, rightRayLine);
+        UpdateSingleRay(leftControllerTransform, leftRayLine);
+    }
+
+    void UpdateSingleRay(Transform controller, LineRenderer line)
+    {
+        if (controller == null || line == null) return;
+
+        Vector3 start = controller.position;
+        Vector3 end;
+
+        RaycastHit hit;
+        if (Physics.Raycast(start, controller.forward, out hit, rayDistance, raycastLayerMask))
+        {
+            end = hit.point;
+            line.startColor = Color.green;
+            line.endColor = Color.green;
+        }
+        else
+        {
+            end = start + controller.forward * rayDistance;
+            line.startColor = Color.white;
+            line.endColor = Color.white;
+        }
+
+        line.SetPosition(0, start);
+        line.SetPosition(1, end);
     }
 }
