@@ -117,7 +117,6 @@ public class search_logic : MonoBehaviour
             {
                 RemoveHighlight(previousTarget);
             }
-            HighlightObject(targetObject);
             previousTarget = targetObject;
         }
 
@@ -126,12 +125,12 @@ public class search_logic : MonoBehaviour
         if (!hintActive && searchTimer >= timeUntilHint)
         {
             ActivateHint();
-            HighlightObject(targetObject);
         }
 
         if (hintActive && activeParticleTrail != null)
         {
             UpdateParticleTrail();
+            HighlightObject(targetObject);
         }
 
         // VR Controller Raycast f�r rechten Controller

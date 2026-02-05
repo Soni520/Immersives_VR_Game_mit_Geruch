@@ -1,9 +1,11 @@
 using UnityEngine;
+using TMPro;
 
 public class GradientMenuManager : MonoBehaviour
 {
     private OlfactoryDeviceManager OlfactoryDeviceManager;
     private GameObject MenuCanvas;
+    [SerializeField] private TextMeshProUGUI OlfactoryDebugText;
     private bool Initialized = false;
     private float InitializeTimer = 0f;
     private float Timer = 0f;
@@ -30,24 +32,21 @@ public class GradientMenuManager : MonoBehaviour
             }
         }
 
-        if (!Initialized)
-        {
-            InitializeTimer += Time.deltaTime;
-            if (InitializeTimer > 3.0f)
-            {
-                Initialized = true;
-                OlfactoryDeviceManager.Open();
-                OlfactoryDeviceManager.Open();
-                OlfactoryDeviceManager.SetPump(Random.Range(1, 4));
-                OlfactoryDeviceManager.SetFrequency(PlayerPrefs.GetFloat("ScentIntensity", 1.0f) * 1.5f);
-                OlfactoryDeviceManager.StartPump();
-            }
-        }
-
         if (!MenuOn)
         {
             Timer += Time.deltaTime;   
         }
+
+        if (!Initialized && Timer > 3f)
+        {
+            OlfactoryDeviceManager.Open();
+            OlfactoryDeviceManager.Open();
+            OlfactoryDeviceManager.SetPump(Random.Range(1, 4));
+            OlfactoryDeviceManager.SetFrequency(PlayerPrefs.GetFloat("ScentIntensity", 1.0f) * 1.5f);
+            OlfactoryDeviceManager.StartPump();
+            Initialized = true;
+        }
+        OlfactoryDebugText.text = "Timer: " + Timer.ToString("F2") + " | Device connected: " + Initialized.ToString();
 
         if (Timer > PlayerPrefs.GetInt("TimeValue", 5) * 60f)
         {
