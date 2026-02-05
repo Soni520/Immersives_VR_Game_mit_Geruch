@@ -79,6 +79,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5655403424763036392, guid: 6a9eeca5d59c823488177969fff67e3b, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5692538808676400517}
+    - targetCorrespondingSourceObject: {fileID: 5655403424763036392, guid: 6a9eeca5d59c823488177969fff67e3b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -5296221851260160714}
   m_SourcePrefab: {fileID: 100100000, guid: 6a9eeca5d59c823488177969fff67e3b, type: 3}
 --- !u!1 &3518323221077183279 stripped
 GameObject:
@@ -106,3 +109,17 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.05210878, y: 0.06663079, z: 0.065896094}
   m_Center: {x: 0.00014267955, y: 0.033534113, z: 0.007312456}
+--- !u!114 &-5296221851260160714
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3518323221077183279}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83760a45e89599247952c59c364cbde8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PrefabPickup
+  prefabID: 1
+  sceneToLoad: Gradient
