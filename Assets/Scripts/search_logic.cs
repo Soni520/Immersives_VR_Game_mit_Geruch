@@ -30,7 +30,7 @@ public class search_logic : MonoBehaviour
     public string targetSceneName = "meditation_scene";
 
     [Header("Debug Settings")]
-    public TextMeshProUGUI debugText; // Zusätzliches Text-Feld für Debug-Info
+    public TextMeshProUGUI debugText; // Zusï¿½tzliches Text-Feld fï¿½r Debug-Info
     public bool showDebug = true;
 
     public List<GameObject> spawnedObjects = new List<GameObject>();
@@ -75,6 +75,7 @@ public class search_logic : MonoBehaviour
         if (spawnedObjects.Count == 0)
         {
             AddDebugMessage("WARNING: No spawned objects!");
+            UpdateDebugDisplay();
             return;
         }
 
@@ -110,6 +111,7 @@ public class search_logic : MonoBehaviour
         if (!hintActive && searchTimer >= timeUntilHint)
         {
             ActivateHint();
+            HighlightObject(targetObject);
         }
 
         if (hintActive && activeParticleTrail != null)
@@ -117,7 +119,7 @@ public class search_logic : MonoBehaviour
             UpdateParticleTrail();
         }
 
-        // VR Controller Raycast für rechten Controller
+        // VR Controller Raycast fï¿½r rechten Controller
         if (OVRInput.GetDown(OVRInput.Button.One, rightController) ||
             OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, rightController) > 0.5f)
         {
@@ -125,7 +127,7 @@ public class search_logic : MonoBehaviour
             CheckControllerRaycast(rightControllerTransform, "RIGHT");
         }
 
-        // VR Controller Raycast für linken Controller
+        // VR Controller Raycast fï¿½r linken Controller
         if (OVRInput.GetDown(OVRInput.Button.One, leftController) ||
             OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, leftController) > 0.5f)
         {
@@ -133,7 +135,7 @@ public class search_logic : MonoBehaviour
             CheckControllerRaycast(leftControllerTransform, "LEFT");
         }
 
-        // Fallback für Editor-Testing
+        // Fallback fï¿½r Editor-Testing
         if (Input.GetMouseButtonDown(0))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
