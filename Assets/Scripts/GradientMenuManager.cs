@@ -3,33 +3,33 @@ using UnityEngine;
 public class GradientMenuManager : MonoBehaviour
 {
     private OlfactoryDeviceManager OlfactoryDeviceManager;
+    private GameObject MenuCanvas;
     private bool Initialized = false;
     private float InitializeTimer = 0f;
+    private float Timer = 0f;
+    private bool MenuOn = false;
     void Awake()
     {
         OlfactoryDeviceManager = GetComponent<OlfactoryDeviceManager>();
+        MenuCanvas = GameObject.Find("MenuCanvas");
     }
 
     void Update()
     {
         if (OVRInput.GetDown(OVRInput.Button.Start))
         {
-            GameObject.Find("MenuCanvas").GetComponent<CanvasGroup>().interactable = !GameObject.Find("MenuCanvas").GetComponent<CanvasGroup>().interactable;
-            GameObject.Find("MenuCanvas").GetComponent<CanvasGroup>().blocksRaycasts = !GameObject.Find("MenuCanvas").GetComponent<CanvasGroup>().blocksRaycasts;
-            if(GameObject.Find("MenuCanvas").GetComponent<CanvasGroup>().alpha == 0)
+            if(!MenuOn)
             {
-                GameObject.Find("MenuCanvas").GetComponent<CanvasGroup>().alpha = 1;
-                GameObject.Find("ISDK_RayCanvasInteraction_Menu").GetComponent<CanvasGroup>().enabled = true;
-                OlfactoryDeviceManager.SetFrequency(0);
-
+                MenuOn = true;
+                MenuCanvas.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(0, 0, 1.75f);
                 
-            } else if(GameObject.Find("MenuCanvas").GetComponent<CanvasGroup>().alpha == 1)
+            } else if(MenuOn)
             {
-                GameObject.Find("MenuCanvas").GetComponent<CanvasGroup>().alpha = 0;
-                GameObject.Find("ISDK_RayCanvasInteraction_Menu").GetComponent<CanvasGroup>().enabled = false;
-                OlfactoryDeviceManager.SetFrequency(PlayerPrefs.GetFloat("ScentIntensity", 1.0f) * 1.5f);
+                MenuOn = false;
+                MenuCanvas.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(0, 0, -2f);
             }
         }
+
         if (!Initialized)
         {
             InitializeTimer += Time.deltaTime;
@@ -43,6 +43,16 @@ public class GradientMenuManager : MonoBehaviour
                 OlfactoryDeviceManager.StartPump();
             }
         }
+
+        if (!MenuOn)
+        {
+            Timer += Time.deltaTime;   
+        }
+
+        if (Timer > PlayerPrefs.GetInt("TimeValue", 5) * 60f)
+        {
+            ChangeScene("Menu");
+        }
     }
 
     public void ChangeScene(string sceneName)
@@ -52,10 +62,7 @@ public class GradientMenuManager : MonoBehaviour
 
     public void GoBack()
     {
-        GameObject.Find("MenuCanvas").GetComponent<CanvasGroup>().alpha = 0;
-        GameObject.Find("ISDK_RayCanvasInteraction_Menu").GetComponent<CanvasGroup>().enabled = false;
-        GameObject.Find("MenuCanvas").GetComponent<CanvasGroup>().interactable = false;
-        GameObject.Find("MenuCanvas").GetComponent<CanvasGroup>().blocksRaycasts = false;
-        OlfactoryDeviceManager.SetFrequency(PlayerPrefs.GetFloat("ScentIntensity", 1.0f) * 1.5f);
+        MenuCanvas.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(0, 0, -2f);
+        MenuOn = false;
     }
 }

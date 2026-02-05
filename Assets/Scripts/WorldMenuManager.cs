@@ -19,23 +19,17 @@ public class WorldMenuManager : MonoBehaviour
     {
         if (OVRInput.GetDown(OVRInput.Button.Start))
         {
-            //GameObject.Find("MenuCanvas").GetComponent<CanvasGroup>().interactable = !GameObject.Find("MenuCanvas").GetComponent<CanvasGroup>().interactable;
-            //GameObject.Find("MenuCanvas").GetComponent<CanvasGroup>().blocksRaycasts = !GameObject.Find("MenuCanvas").GetComponent<CanvasGroup>().blocksRaycasts;
             if(!ObjectScentManager.MenuOn)
             {
-                //GameObject.Find("MenuCanvas").GetComponent<CanvasGroup>().alpha = 1;
-                //GameObject.Find("ISDK_RayCanvasInteraction_Menu").GetComponent<CanvasGroup>().enabled = true;
                 ObjectScentManager.MenuOn = true;
-                MenuCanvas.GetComponent<RectTransform>().position = new Vector3(0, 0, 1.75f);
+                MenuCanvas.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(0, 0, 1.75f);
                 SearchingObject.GetComponent<CanvasGroup>().alpha = 0;
                 
             } else if(ObjectScentManager.MenuOn)
             {
-                //GameObject.Find("MenuCanvas").GetComponent<CanvasGroup>().alpha = 0;
-                //GameObject.Find("ISDK_RayCanvasInteraction_Menu").GetComponent<CanvasGroup>().enabled = false;
                 ObjectScentManager.MenuOn = false;
                 SearchingObject.GetComponent<CanvasGroup>().alpha = 1;
-                MenuCanvas.GetComponent<RectTransform>().position = new Vector3(0, 0, -2f);
+                MenuCanvas.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(0, 0, -2f);
             }
         }
     }
@@ -47,12 +41,8 @@ public class WorldMenuManager : MonoBehaviour
 
     public void GoBack()
     {
-        //GameObject.Find("MenuCanvas").GetComponent<CanvasGroup>().alpha = 0;
-        //GameObject.Find("ISDK_RayCanvasInteraction_Menu").GetComponent<CanvasGroup>().enabled = false;
-        //GameObject.Find("MenuCanvas").GetComponent<CanvasGroup>().interactable = false;
-        //GameObject.Find("MenuCanvas").GetComponent<CanvasGroup>().blocksRaycasts = false;
         ObjectScentManager.MenuOn = false;
         SearchingObject.GetComponent<CanvasGroup>().alpha = 1;
-        MenuCanvas.GetComponent<RectTransform>().position = new Vector3(0, 0, -2f);
+        MenuCanvas.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(0, 0, -2f);
     }
 }

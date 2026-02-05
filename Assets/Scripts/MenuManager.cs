@@ -83,15 +83,28 @@ private void Awake()
             SaveScentValue();
             UpdateScentText();
         }
+        if (!OlfactoryStarted)
+        {
+            OlfactoryDeviceManager.Open();
+            OlfactoryDeviceManager.Open();
+            OlfactoryStarted = true;
+        }
     }
 
     public void OnScentPlusClicked()
     {
+        
         if (currentScentPercent <= MAX_SCENT - SCENT_STEP)
         {
             currentScentPercent += SCENT_STEP;
             SaveScentValue();
             UpdateScentText();
+        }
+        if (!OlfactoryStarted)
+        {
+            OlfactoryDeviceManager.Open();
+            OlfactoryDeviceManager.Open();
+            OlfactoryStarted = true;
         }
     }
 
@@ -142,8 +155,6 @@ private void Awake()
 
     public void TestFrequency()
     {
-        OlfactoryDeviceManager.Open();
-        OlfactoryDeviceManager.Open();
         OlfactoryDeviceManager.SetPump(1);
         OlfactoryDeviceManager.SetFrequency((double)(PlayerPrefs.GetInt("ScentIntensity", 50) * 1.5));
         OlfactoryDeviceManager.StartPump();
