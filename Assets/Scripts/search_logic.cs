@@ -12,6 +12,7 @@ public class search_logic : MonoBehaviour
 
     public TextMeshProUGUI uiText;
     [SerializeField] private GameObject Player;
+    private OlfactoryDeviceManager OlfactoryDeviceManager;
 
     public List<Vector3> spawnPositions;
     public List<GameObject> spawnableObjects;
@@ -55,6 +56,7 @@ public class search_logic : MonoBehaviour
 
         AddDebugMessage($"Started! Spawned {spawnedObjects.Count} objects");
         UpdateDebugDisplay();
+        OlfactoryDeviceManager = GetComponent<OlfactoryDeviceManager>();
     }
 
     void FindControllerTransforms()
@@ -194,6 +196,7 @@ public class search_logic : MonoBehaviour
         if (spawnedObjects.Contains(hitObject))
         {
             AddDebugMessage($"SUCCESS! Scene change!");
+            OlfactoryDeviceManager.SetFrequency(PlayerPrefs.GetFloat("ScentIntensity", 50) * 1.5f);
             SceneManager.LoadScene("Gradient");
             uiText.text = "Object touched!";
             OnObjectTouched(hitObject);
