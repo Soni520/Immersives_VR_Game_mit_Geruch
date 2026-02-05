@@ -660,10 +660,10 @@ MonoBehaviour:
   uiText: {fileID: 0}
   Player: {fileID: 1505174179}
   spawnPositions:
-  - {x: -7, y: 35, z: -70}
-  - {x: -64, y: 52, z: -24}
+  - {x: -7, y: 36, z: -70}
+  - {x: -64, y: 28, z: -24}
   - {x: -10, y: 41, z: 50}
-  - {x: 36, y: 40, z: 46}
+  - {x: 36, y: 41, z: 46}
   spawnableObjects:
   - {fileID: 3518323221077183279, guid: c7aaf75dba7fc354f814fd7315d930ca, type: 3}
   - {fileID: 2558290606065680355, guid: 397aadac1dbca484989b4895d9f52673, type: 3}
