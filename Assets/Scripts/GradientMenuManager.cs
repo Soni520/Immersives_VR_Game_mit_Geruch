@@ -6,14 +6,12 @@ public class GradientMenuManager : MonoBehaviour
     private OlfactoryDeviceManager OlfactoryDeviceManager;
     private GameObject MenuCanvas;
     [SerializeField] private TextMeshProUGUI OlfactoryDebugText;
-    private bool Initialized = false;
-    private float InitializeTimer = 0f;
     private float Timer = 0f;
     private bool MenuOn = false;
     void Awake()
     {
-        OlfactoryDeviceManager = GetComponent<OlfactoryDeviceManager>();
         MenuCanvas = GameObject.Find("MenuCanvas");
+        OlfactoryDeviceManager = GetComponent<OlfactoryDeviceManager>();
     }
 
     void Update()
@@ -24,7 +22,6 @@ public class GradientMenuManager : MonoBehaviour
             {
                 MenuOn = true;
                 MenuCanvas.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(0, 0, 1.75f);
-                
             } else if(MenuOn)
             {
                 MenuOn = false;
@@ -41,24 +38,6 @@ public class GradientMenuManager : MonoBehaviour
         {
             ChangeScene("Menu");
         }
-
-        if (!Initialized && Timer > 3f)
-        {
-            //OlfactoryDebugText.text = "Timer: " + Timer.ToString("F2") + " | vor Open 1";
-            OlfactoryDebugText.text = OlfactoryDeviceManager.ToString();
-            OlfactoryDeviceManager.Open();
-            OlfactoryDebugText.text = "Timer: " + Timer.ToString("F2") + " | nach Open 1";
-            OlfactoryDeviceManager.Open();
-            OlfactoryDebugText.text = "Timer: " + Timer.ToString("F2") + " | nach Open 2";
-            OlfactoryDeviceManager.SetPump(Random.Range(1, 4));
-            OlfactoryDebugText.text = "Timer: " + Timer.ToString("F2") + " | nach setPump";
-            OlfactoryDeviceManager.SetFrequency(PlayerPrefs.GetFloat("ScentIntensity", 1.0f) * 1.5f);
-            OlfactoryDebugText.text = "Timer: " + Timer.ToString("F2") + " | nach SetFrequency";
-            OlfactoryDeviceManager.StartPump();
-            OlfactoryDebugText.text = "Timer: " + Timer.ToString("F2") + " | nach StartPump";
-            Initialized = true;
-        }
-
     }
 
     public void ChangeScene(string sceneName)
@@ -71,5 +50,14 @@ public class GradientMenuManager : MonoBehaviour
     {
         MenuCanvas.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(0, 0, -2f);
         MenuOn = false;
+    }
+
+    public void StartScent()
+    {
+        OlfactoryDeviceManager.Open();
+        OlfactoryDeviceManager.Open();
+        OlfactoryDeviceManager.SetPump(Random.Range(1, 4));
+        OlfactoryDeviceManager.SetFrequency(PlayerPrefs.GetInt("ScentIntensity", 50) * 1.5f);
+        OlfactoryDeviceManager.StartPump();
     }
 }
