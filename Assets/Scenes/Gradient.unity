@@ -603,6 +603,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7f488c4d1daf8842ac8f88bf91e4f0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GradientMenuManager
+  OlfactoryDebugText: {fileID: 69737685}
 --- !u!4 &391466621
 Transform:
   m_ObjectHideFlags: 0

@@ -18,6 +18,7 @@ public class GradientMenuManager : MonoBehaviour
 
     void Update()
     {
+        OlfactoryDebugText.text = "Timer: " + Timer.ToString("F2") + " | Device connected: " + Initialized.ToString();
         if (OVRInput.GetDown(OVRInput.Button.Start))
         {
             if(!MenuOn)
@@ -46,7 +47,6 @@ public class GradientMenuManager : MonoBehaviour
             OlfactoryDeviceManager.StartPump();
             Initialized = true;
         }
-        OlfactoryDebugText.text = "Timer: " + Timer.ToString("F2") + " | Device connected: " + Initialized.ToString();
 
         if (Timer > PlayerPrefs.GetInt("TimeValue", 5) * 60f)
         {

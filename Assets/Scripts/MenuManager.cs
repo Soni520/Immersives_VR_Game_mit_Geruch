@@ -160,4 +160,9 @@ private void Awake()
         OlfactoryDeviceManager.StartPump();
         TestFrequencyRunning = true;
     }
+
+    public void Quit()
+    {
+        Application.Quit();
+    }
 }
