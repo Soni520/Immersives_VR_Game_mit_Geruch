@@ -44,7 +44,8 @@ public class GradientMenuManager : MonoBehaviour
 
         if (!Initialized && Timer > 3f)
         {
-            OlfactoryDebugText.text = "Timer: " + Timer.ToString("F2") + " | vor Open 1";
+            //OlfactoryDebugText.text = "Timer: " + Timer.ToString("F2") + " | vor Open 1";
+            OlfactoryDebugText.text = OlfactoryDeviceManager.ToString();
             OlfactoryDeviceManager.Open();
             OlfactoryDebugText.text = "Timer: " + Timer.ToString("F2") + " | nach Open 1";
             OlfactoryDeviceManager.Open();
