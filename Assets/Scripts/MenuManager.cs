@@ -140,6 +140,7 @@ private void Awake()
 
     public void ChangeScene(string sceneName)
     {
+        OlfactoryDeviceManager.StopAllPumps();
         UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName);
     }
 
