@@ -194,6 +194,7 @@ public class search_logic : MonoBehaviour
         if (spawnedObjects.Contains(hitObject))
         {
             AddDebugMessage($"SUCCESS! Scene change!");
+            SceneManager.LoadScene("Gradient");
             uiText.text = "Object touched!";
             OnObjectTouched(hitObject);
         }
