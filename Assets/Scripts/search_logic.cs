@@ -314,7 +314,7 @@ public class search_logic : MonoBehaviour
 
     void changeScene(String sceneName)
     {
-        SceneManager.LoadScene(sceneName);
+        SceneManager.LoadScene("Gradient");
     }
 
     // Debug-Funktionen
