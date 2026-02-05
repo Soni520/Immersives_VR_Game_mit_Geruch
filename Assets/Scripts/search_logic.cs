@@ -45,6 +45,7 @@ public class search_logic : MonoBehaviour
 
     private List<string> debugMessages = new List<string>();
     private int maxDebugMessages = 10;
+    private float debugTimer = 0f;
 
     void Start()
     {
@@ -53,6 +54,7 @@ public class search_logic : MonoBehaviour
         FindControllerTransforms();
 
         AddDebugMessage($"Started! Spawned {spawnedObjects.Count} objects");
+        UpdateDebugDisplay();
     }
 
     void FindControllerTransforms()
@@ -72,6 +74,19 @@ public class search_logic : MonoBehaviour
 
     void Update()
     {
+        // Periodischer Debug-Output alle 2 Sekunden
+        debugTimer += Time.deltaTime;
+        if (debugTimer >= 2f)
+        {
+            debugTimer = 0f;
+            string rCtrl = rightControllerTransform != null ? "OK" : "NULL";
+            string lCtrl = leftControllerTransform != null ? "OK" : "NULL";
+            float rTrigger = OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, rightController);
+            float lTrigger = OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, leftController);
+            AddDebugMessage($"TICK | R:{rCtrl} L:{lCtrl} | RTrig:{rTrigger:F2} LTrig:{lTrigger:F2} | Objs:{spawnedObjects.Count}");
+            UpdateDebugDisplay();
+        }
+
         if (spawnedObjects.Count == 0)
         {
             AddDebugMessage("WARNING: No spawned objects!");
