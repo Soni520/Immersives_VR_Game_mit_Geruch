@@ -1681,55 +1681,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 554564287}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &310831185
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 310831187}
-  - component: {fileID: 310831186}
-  m_Layer: 0
-  m_Name: OlfactoryDeviceManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &310831186
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 310831185}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bab7cd649468f564f8a3d72196c7e661, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::OlfactoryDeviceManager
-  _baudRate: 9600
-  _dataBits: 8
-  _stopBits: 1
-  _parity: 0
-  TextField: {fileID: 0}
---- !u!4 &310831187
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 310831185}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 12.56522, y: 0, z: 17.57848}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &333398297
 GameObject:
   m_ObjectHideFlags: 0
@@ -11214,6 +11165,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1840565457}
   - component: {fileID: 1840565456}
+  - component: {fileID: 1840565458}
   m_Layer: 0
   m_Name: MenuManager
   m_TagString: Untagged
@@ -11250,6 +11202,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1840565458
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1840565455}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bab7cd649468f564f8a3d72196c7e661, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OlfactoryDeviceManager
+  _baudRate: 9600
+  _dataBits: 8
+  _stopBits: 1
+  _parity: 0
+  TextField: {fileID: 0}
 --- !u!1 &1854743355
 GameObject:
   m_ObjectHideFlags: 0
@@ -11499,6 +11468,68 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1832713589}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1946173036
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1946173038}
+  - component: {fileID: 1946173037}
+  - component: {fileID: 1946173039}
+  m_Layer: 0
+  m_Name: ConnectOlfactoryDeviceManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1946173037
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1946173036}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e116730680beaf345811e9d9cc7bd2b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ConnectOlfactoryDeviceManager
+--- !u!4 &1946173038
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1946173036}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1946173039
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1946173036}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bab7cd649468f564f8a3d72196c7e661, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OlfactoryDeviceManager
+  _baudRate: 9600
+  _dataBits: 8
+  _stopBits: 1
+  _parity: 0
+  TextField: {fileID: 0}
 --- !u!1 &1956922540
 GameObject:
   m_ObjectHideFlags: 0
@@ -12862,5 +12893,5 @@ SceneRoots:
   - {fileID: 584449115}
   - {fileID: 1295745701}
   - {fileID: 1507442031}
-  - {fileID: 310831187}
   - {fileID: 1840565457}
+  - {fileID: 1946173038}

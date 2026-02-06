@@ -202,7 +202,6 @@ public class search_logic : MonoBehaviour
         if (spawnedObjects.Contains(hitObject))
         {
             AddDebugMessage($"SUCCESS! Scene change!");
-            OlfactoryDeviceManager.SetFrequency(PlayerPrefs.GetFloat("ScentIntensity", 50) * 1.5f);
             SceneManager.LoadScene("Gradient");
             uiText.text = "Object touched!";
             OnObjectTouched(hitObject);

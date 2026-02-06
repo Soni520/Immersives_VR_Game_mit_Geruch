@@ -14,7 +14,6 @@ public class ObjectScentManager : MonoBehaviour
     private double CurrentFrequency = -1.0;
     [SerializeField] private TextMeshProUGUI TextField;
     [SerializeField] private TextMeshProUGUI FruitField;
-    private bool OlfactoryStarted = false;
     public bool MenuOn = false;
     private bool PumpOn = false;
     private float MaxScentValue = -1f;
@@ -35,7 +34,7 @@ public class ObjectScentManager : MonoBehaviour
 
     void Update()
     {
-        if (OlfactoryDeviceManager != null && SearchLogicScript != null && Player != null && !MenuOn)
+        if (!MenuOn)
         {
             var FindNearestObject = NearestObject();
             string NewPump = FindNearestObject.Item1.name;
@@ -55,7 +54,7 @@ public class ObjectScentManager : MonoBehaviour
                 CurrentFrequency = NewFrequency;
             }
         }
-        if (OlfactoryDeviceManager != null && MenuOn && PumpOn)
+        if (MenuOn && PumpOn)
         {
             PumpOn = OlfactoryDeviceManager.StopAllPumps();
             CurrentPump = null;
@@ -82,13 +81,6 @@ public class ObjectScentManager : MonoBehaviour
 
     private void SetScent(string Pump)
     {
-        if (!OlfactoryStarted)
-        {
-            OlfactoryDeviceManager.Open();
-            OlfactoryDeviceManager.Open();
-            OlfactoryStarted = true;
-        }
-
         switch (Pump)
         {
             case "Watermelon(Clone)":

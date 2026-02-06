@@ -17,9 +17,8 @@ public class MenuManager : MonoBehaviour
     private const int MAX_SCENT = 100;
     private const int SCENT_STEP = 10;
 
-    private bool OlfactoryStarted = false;
-    private bool TestFrequencyRunning = false;
-    private float TestFrequencyTimer = 0f;
+    private bool TestIntensityRunning = false;
+    private float TestIntensityTimer = 0f;
 
 private void Awake()
     {
@@ -27,7 +26,6 @@ private void Awake()
     }
     void Start()
     {
-
         // Gespeicherte Werte laden
         int savedTimeValue = PlayerPrefs.GetInt("TimeValue", 1);
         currentMinutes = savedTimeValue;
@@ -41,14 +39,14 @@ private void Awake()
 
     void Update()
     {
-        if (TestFrequencyRunning)
+        if (TestIntensityRunning)
         {
-            TestFrequencyTimer += Time.deltaTime;
-            if (TestFrequencyTimer > 5f)
+            TestIntensityTimer += Time.deltaTime;
+            if (TestIntensityTimer > 5f)
             {
                 OlfactoryDeviceManager.StopAllPumps();
-                TestFrequencyRunning = false;
-                TestFrequencyTimer = 0f;
+                TestIntensityRunning = false;
+                TestIntensityTimer = 0f;
             }
         }
     }
@@ -83,12 +81,6 @@ private void Awake()
             SaveScentValue();
             UpdateScentText();
         }
-        if (!OlfactoryStarted)
-        {
-            OlfactoryDeviceManager.Open();
-            OlfactoryDeviceManager.Open();
-            OlfactoryStarted = true;
-        }
     }
 
     public void OnScentPlusClicked()
@@ -99,12 +91,6 @@ private void Awake()
             currentScentPercent += SCENT_STEP;
             SaveScentValue();
             UpdateScentText();
-        }
-        if (!OlfactoryStarted)
-        {
-            OlfactoryDeviceManager.Open();
-            OlfactoryDeviceManager.Open();
-            OlfactoryStarted = true;
         }
     }
 
@@ -140,7 +126,7 @@ private void Awake()
 
     public void ChangeScene(string sceneName)
     {
-        //OlfactoryDeviceManager.StopAllPumps();
+        OlfactoryDeviceManager.StopAllPumps();
         UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName);
     }
 
@@ -154,12 +140,13 @@ private void Awake()
         return PlayerPrefs.GetInt("ScentIntensity", 50);
     }
 
-    public void TestFrequency()
+    public void TestIntensity()
     {
-        OlfactoryDeviceManager.SetPump(1);
-        OlfactoryDeviceManager.SetFrequency((double)(PlayerPrefs.GetInt("ScentIntensity", 50) * 1.5));
+        OlfactoryDeviceManager.SetPump(Random.Range(1, 4));
+        OlfactoryDeviceManager.SetFrequency(PlayerPrefs.GetInt("ScentIntensity", 50) * 1.5f);
         OlfactoryDeviceManager.StartPump();
-        TestFrequencyRunning = true;
+        TestIntensityRunning = true;
+        TestIntensityTimer = 0f;
     }
 
     public void Quit()

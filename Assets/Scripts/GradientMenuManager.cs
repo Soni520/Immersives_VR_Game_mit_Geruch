@@ -1,17 +1,25 @@
 using UnityEngine;
 using TMPro;
+using System.Collections;
+using System.Security.Cryptography;
 
 public class GradientMenuManager : MonoBehaviour
 {
     private OlfactoryDeviceManager OlfactoryDeviceManager;
     private GameObject MenuCanvas;
-    [SerializeField] private TextMeshProUGUI OlfactoryDebugText;
     private float Timer = 0f;
     private bool MenuOn = false;
     void Awake()
     {
         MenuCanvas = GameObject.Find("MenuCanvas");
         OlfactoryDeviceManager = GetComponent<OlfactoryDeviceManager>();
+    }
+
+    void Start()
+    {
+        OlfactoryDeviceManager.SetPump(Random.Range(1, 4));
+        OlfactoryDeviceManager.SetFrequency(PlayerPrefs.GetInt("ScentIntensity", 50) * 1.5f);
+        OlfactoryDeviceManager.StartPump();
     }
 
     void Update()
@@ -50,14 +58,5 @@ public class GradientMenuManager : MonoBehaviour
     {
         MenuCanvas.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(0, 0, -2f);
         MenuOn = false;
-    }
-
-    public void StartScent()
-    {
-        OlfactoryDeviceManager.Open();
-        OlfactoryDeviceManager.Open();
-        OlfactoryDeviceManager.SetPump(Random.Range(1, 4));
-        OlfactoryDeviceManager.SetFrequency(PlayerPrefs.GetInt("ScentIntensity", 50) * 1.5f);
-        OlfactoryDeviceManager.StartPump();
     }
 }
