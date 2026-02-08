@@ -1,7 +1,4 @@
 using UnityEngine;
-using TMPro;
-using System.Collections;
-using System.Security.Cryptography;
 
 public class GradientMenuManager : MonoBehaviour
 {

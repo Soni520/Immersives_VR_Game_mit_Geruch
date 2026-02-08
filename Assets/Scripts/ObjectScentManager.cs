@@ -1,9 +1,6 @@
 using System;
-using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class ObjectScentManager : MonoBehaviour
 {
@@ -87,9 +84,9 @@ public class ObjectScentManager : MonoBehaviour
                 OlfactoryDeviceManager.SetPump(1);
                 FruitField.text = "Find the Watermelon";
                 break;
-            case "Coconut(Clone)":
+            case "Orange(Clone)":
                 OlfactoryDeviceManager.SetPump(2);
-                FruitField.text = "Find the Coconut";
+                FruitField.text = "Find the Orange";
                 break;
             case "Lemon(Clone)":
                 OlfactoryDeviceManager.SetPump(3);
