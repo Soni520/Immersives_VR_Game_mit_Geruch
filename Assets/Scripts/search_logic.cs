@@ -23,6 +23,7 @@ public class search_logic : MonoBehaviour
     public OVRInput.Controller rightController = OVRInput.Controller.RTouch;
     public OVRInput.Controller leftController = OVRInput.Controller.LTouch;
     public float rayDistance = 10f;
+    public float rayShowDistance = 5f; 
     public LayerMask raycastLayerMask = ~0;
 
     [Header("Scene Settings")]
@@ -362,13 +363,25 @@ public class search_logic : MonoBehaviour
 
     void UpdateRayVisuals()
     {
-        UpdateSingleRay(rightControllerTransform, rightRayLine);
-        UpdateSingleRay(leftControllerTransform, leftRayLine);
+        // Prüfe ob Spieler nah genug am Target ist
+        bool showRays = false;
+        if (targetObject != null && Player != null)
+        {
+            float distanceToTarget = Vector3.Distance(Player.transform.position, targetObject.transform.position);
+            showRays = distanceToTarget <= rayShowDistance;
+        }
+
+        UpdateSingleRay(rightControllerTransform, rightRayLine, showRays);
+        UpdateSingleRay(leftControllerTransform, leftRayLine, showRays);
     }
 
-    void UpdateSingleRay(Transform controller, LineRenderer line)
+    void UpdateSingleRay(Transform controller, LineRenderer line, bool showRay)
     {
         if (controller == null || line == null) return;
+
+        // Ray ausblenden wenn Spieler nicht nah genug am Target ist
+        line.enabled = showRay;
+        if (!showRay) return;
 
         Vector3 start = controller.position;
         Vector3 end;
