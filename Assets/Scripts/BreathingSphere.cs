@@ -11,22 +11,29 @@ public class BreathingFade : MonoBehaviour
 
     public TextMeshProUGUI breathText;
 
-    public float inhaleLogStrength = 4f; // Stärke der Log-Kurve
+    [Header("Breath In")]
+    public float inhaleLogStrength = 4f;
+    public float inhaleScale = 1.08f;
+    public Color inhaleColor = new Color(0.7f, 0.85f, 1f);
 
     float lastA;
+    Vector3 baseScale;
+
+    void Start()
+    {
+        baseScale = breathText.transform.localScale;
+    }
 
     void Update()
     {
-        // 0..1 Atemzyklus
         float t = Mathf.PingPong(Time.time * speed, 1f);
 
-        // Sphere Alpha
+        // Sphere
         float a = Mathf.Lerp(minAlpha, maxAlpha, t);
         Color sphereColor = sphereRenderer.material.color;
         sphereColor.a = a;
         sphereRenderer.material.color = sphereColor;
 
-        // Text-Logik
         Color textColor = breathText.color;
 
         if (a < lastA)
@@ -34,17 +41,43 @@ public class BreathingFade : MonoBehaviour
             // Breath In (heller werdend)
             breathText.text = "Breath In";
 
-            // logarithmisch: schnell sichtbar, dann langsam
-            float logAlpha = 1f - Mathf.Exp(-inhaleLogStrength * t);
-            textColor.a = Mathf.Clamp01(logAlpha);
+            // Fortschritt korrekt herum
+            float p = 1f - t;
+
+            // logarithmisch EINblenden
+            float logP = 1f - Mathf.Exp(-inhaleLogStrength * p);
+            logP = Mathf.Clamp01(logP);
+
+            // Alpha
+            textColor.a = logP;
+
+            // Farbe Richtung blau
+            textColor.r = Mathf.Lerp(1f, inhaleColor.r, logP);
+            textColor.g = Mathf.Lerp(1f, inhaleColor.g, logP);
+            textColor.b = Mathf.Lerp(1f, inhaleColor.b, logP);
+
+            // Skalierung: größer werden
+            float scale = Mathf.Lerp(1f, inhaleScale, logP);
+            breathText.transform.localScale = baseScale * scale;
         }
         else
         {
             // Breath Out (dunkler werdend)
             breathText.text = "Breath Out";
 
-            // linear fade out
-            textColor.a = 1f - t;
+            // linear AUSblenden
+            float outP = t;
+
+            textColor.a = 1f - outP;
+
+            // Farbe zurück zu weiß
+            textColor.r = 1f;
+            textColor.g = 1f;
+            textColor.b = 1f;
+
+            // Skalierung: kleiner werden
+            float scale = Mathf.Lerp(inhaleScale, 1f, outP);
+            breathText.transform.localScale = baseScale * scale;
         }
 
         breathText.color = textColor;
