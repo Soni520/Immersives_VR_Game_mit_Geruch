@@ -11,22 +11,43 @@ public class BreathingFade : MonoBehaviour
 
     public TextMeshProUGUI breathText;
 
-    float lastAlpha;
+    public float inhaleLogStrength = 4f; // Stärke der Log-Kurve
+
+    float lastA;
 
     void Update()
     {
+        // 0..1 Atemzyklus
         float t = Mathf.PingPong(Time.time * speed, 1f);
+
+        // Sphere Alpha
         float a = Mathf.Lerp(minAlpha, maxAlpha, t);
+        Color sphereColor = sphereRenderer.material.color;
+        sphereColor.a = a;
+        sphereRenderer.material.color = sphereColor;
 
-        Color c = sphereRenderer.material.color;
-        c.a = a;
-        sphereRenderer.material.color = c;
+        // Text-Logik
+        Color textColor = breathText.color;
 
-        if (a < lastAlpha)
+        if (a < lastA)
+        {
+            // Breath In (heller werdend)
             breathText.text = "Breath In";
-        else if (a > lastAlpha)
+
+            // logarithmisch: schnell sichtbar, dann langsam
+            float logAlpha = 1f - Mathf.Exp(-inhaleLogStrength * t);
+            textColor.a = Mathf.Clamp01(logAlpha);
+        }
+        else
+        {
+            // Breath Out (dunkler werdend)
             breathText.text = "Breath Out";
 
-        lastAlpha = a;
+            // linear fade out
+            textColor.a = 1f - t;
+        }
+
+        breathText.color = textColor;
+        lastA = a;
     }
 }

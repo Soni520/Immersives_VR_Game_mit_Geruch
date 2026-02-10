@@ -1997,6 +1997,7 @@ MonoBehaviour:
   maxAlpha: 0.6
   speed: 0.2
   breathText: {fileID: 0}
+  inhaleLogStrength: 4
 --- !u!1 &1031501197
 GameObject:
   m_ObjectHideFlags: 0
@@ -3751,6 +3752,7 @@ MonoBehaviour:
   maxAlpha: 0.8
   speed: 0.3
   breathText: {fileID: 630525494}
+  inhaleLogStrength: 4
 --- !u!1 &1711396810
 GameObject:
   m_ObjectHideFlags: 0
