@@ -25,6 +25,7 @@ private void Awake()
     }
     void Start()
     {
+        PlayerPrefs.SetInt("CurrentFruit", Random.Range(1, 4));
         // Gespeicherte Werte laden
         int savedTimeValue = PlayerPrefs.GetInt("TimeValue", 1);
         currentMinutes = savedTimeValue;

@@ -82,18 +82,22 @@ public class ObjectScentManager : MonoBehaviour
         {
             case "Watermelon(Clone)":
                 OlfactoryDeviceManager.SetPump(1);
+                PlayerPrefs.SetInt("CurrentFruit", 1);
                 FruitField.text = "Find the Watermelon";
                 break;
             case "Orange(Clone)":
                 OlfactoryDeviceManager.SetPump(2);
+                PlayerPrefs.SetInt("CurrentFruit", 2);
                 FruitField.text = "Find the Orange";
                 break;
             case "Lemon(Clone)":
                 OlfactoryDeviceManager.SetPump(3);
+                PlayerPrefs.SetInt("CurrentFruit", 3);
                 FruitField.text = "Find the Lemon";
                 break;
             case "Pineapple(Clone)":
                 OlfactoryDeviceManager.SetPump(4);
+                PlayerPrefs.SetInt("CurrentFruit", 4);
                 FruitField.text = "Find the Pineapple";
                 break;
 

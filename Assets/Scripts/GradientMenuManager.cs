@@ -4,17 +4,19 @@ public class GradientMenuManager : MonoBehaviour
 {
     private OlfactoryDeviceManager OlfactoryDeviceManager;
     private GameObject MenuCanvas;
+    private GameObject BreathingCanvas;
     private float Timer = 0f;
     private bool MenuOn = false;
     void Awake()
     {
         MenuCanvas = GameObject.Find("MenuCanvas");
+        BreathingCanvas = GameObject.Find("BreathingCanvas");
         OlfactoryDeviceManager = GetComponent<OlfactoryDeviceManager>();
     }
 
     void Start()
     {
-        OlfactoryDeviceManager.SetPump(Random.Range(1, 4));
+        OlfactoryDeviceManager.SetPump(PlayerPrefs.GetInt("CurrentFruit", Random.Range(1, 4)));
         OlfactoryDeviceManager.SetFrequency(PlayerPrefs.GetInt("ScentIntensity", 50) * 1.5f);
         OlfactoryDeviceManager.StartPump();
     }
@@ -27,10 +29,12 @@ public class GradientMenuManager : MonoBehaviour
             {
                 MenuOn = true;
                 MenuCanvas.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(0, 0, 1.75f);
+                BreathingCanvas.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(0, 0, -2f);
             } else if(MenuOn)
             {
                 MenuOn = false;
                 MenuCanvas.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(0, 0, -2f);
+                BreathingCanvas.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(0, 0, 1.75f);
             }
         }
 
@@ -54,6 +58,7 @@ public class GradientMenuManager : MonoBehaviour
     public void GoBack()
     {
         MenuCanvas.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(0, 0, -2f);
+        BreathingCanvas.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(0, 0, 1.75f);
         MenuOn = false;
     }
 }
