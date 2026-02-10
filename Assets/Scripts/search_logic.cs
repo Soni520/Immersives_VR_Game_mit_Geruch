@@ -39,6 +39,7 @@ public class search_logic : MonoBehaviour
     private float searchTimer = 0f;
     private ParticleSystem activeParticleTrail;
     private bool hintActive = false;
+    private float previousDistanceToTarget = float.MaxValue;
 
     private Transform rightControllerTransform;
     private Transform leftControllerTransform;
@@ -114,6 +115,9 @@ public class search_logic : MonoBehaviour
             }
 
             targetObject = currentNearest;
+            previousDistanceToTarget = targetObject != null
+                ? Vector3.Distance(Player.transform.position, targetObject.transform.position)
+                : float.MaxValue;
         }
 
         if (targetObject != previousTarget)
@@ -123,6 +127,27 @@ public class search_logic : MonoBehaviour
                 RemoveHighlight(previousTarget);
             }
             previousTarget = targetObject;
+        }
+
+        // Check if player is moving in the direction of the target
+        if (targetObject != null && Player != null)
+        {
+            float currentDistance = Vector3.Distance(Player.transform.position, targetObject.transform.position);
+
+            if (currentDistance < previousDistanceToTarget - 0.05f)
+            {
+                searchTimer = 0f;
+
+                if (hintActive && activeParticleTrail != null)
+                {
+                    Destroy(activeParticleTrail.gameObject);
+                    activeParticleTrail = null;
+                    hintActive = false;
+                    uiText.text = "";
+                }
+            }
+
+            previousDistanceToTarget = currentDistance;
         }
 
         searchTimer += Time.deltaTime;
@@ -390,8 +415,10 @@ public class search_logic : MonoBehaviour
         if (Physics.Raycast(start, controller.forward, out hit, rayDistance, raycastLayerMask))
         {
             end = hit.point;
-            line.startColor = Color.green;
-            line.endColor = Color.green;
+            bool isTarget = hit.collider.gameObject == targetObject;
+            Color rayColor = isTarget ? Color.green : Color.white;
+            line.startColor = rayColor;
+            line.endColor = rayColor;
         }
         else
         {
