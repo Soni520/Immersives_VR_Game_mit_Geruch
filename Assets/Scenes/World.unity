@@ -386,6 +386,7 @@ GameObject:
   - component: {fileID: 131263643}
   - component: {fileID: 131263642}
   - component: {fileID: 131263644}
+  - component: {fileID: 131263645}
   m_Layer: 0
   m_Name: CenterEyeAnchor
   m_TagString: MainCamera
@@ -443,7 +444,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.1
-  far clip plane: 1000
+  far clip plane: 2000
   field of view: 90
   orthographic: 0
   orthographic size: 5
@@ -514,6 +515,20 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
+--- !u!114 &131263645
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 131263640}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c9144546283e5147af54db0f30f9ec0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MatchTreeDistance
+  targetLayer: 6
+  distance: 2000
 --- !u!1 &236476051
 GameObject:
   m_ObjectHideFlags: 0
@@ -678,6 +693,7 @@ MonoBehaviour:
   rightController: 2
   leftController: 1
   rayDistance: 10
+  rayShowDistance: 5
   raycastLayerMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -1384,7 +1400,7 @@ Terrain:
   m_DetailObjectDistance: 170
   m_DetailObjectDensity: 1
   m_HeightmapPixelError: 5
-  m_SplatMapDistance: 1000
+  m_SplatMapDistance: 2000
   m_HeightmapMinimumLODSimplification: 0
   m_HeightmapMaximumLOD: 0
   m_ShadowCastingMode: 2

@@ -1,0 +1,5 @@
+The plug-in used by the project is based on these two plug-ins
+
+https://github.com/mik3y/usb-serial-for-android
+
+https://github.com/designer024/UnityAndroidSerialPortSample.github/tree/main

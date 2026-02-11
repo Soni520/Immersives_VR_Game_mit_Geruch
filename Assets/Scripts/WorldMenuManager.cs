@@ -1,4 +1,5 @@
 using Oculus.Interaction.Locomotion;
+using UnityEditor;
 using UnityEngine;
 
 public class WorldMenuManager : MonoBehaviour
@@ -10,6 +11,7 @@ public class WorldMenuManager : MonoBehaviour
     private float SpeedFactor;
     private float CrouchSpeedFactor;
     private float RunningSpeedFactor;
+    private Vector3 MenuPosition;
 
     private void Awake()
     {
@@ -32,17 +34,19 @@ public class WorldMenuManager : MonoBehaviour
                 PlayerController.SpeedFactor = 0;
                 PlayerController.CrouchSpeedFactor = 0;
                 PlayerController.RunningSpeedFactor = 0;
-                MenuCanvas.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(0, 0, 1.75f);
+                MenuPosition.z = 1.75f;
+                MenuCanvas.GetComponent<RectTransform>().anchoredPosition3D = MenuPosition;
                 SearchingObject.GetComponent<CanvasGroup>().alpha = 0;
                 
             } else if(ObjectScentManager.MenuOn)
             {
                 ObjectScentManager.MenuOn = false;
-                PlayerController.SpeedFactor = 30;
-                PlayerController.CrouchSpeedFactor = 10;
-                PlayerController.RunningSpeedFactor = 50;
+                MenuPosition.z = -2f;
+                PlayerController.SpeedFactor = SpeedFactor;
+                PlayerController.CrouchSpeedFactor = CrouchSpeedFactor;
+                PlayerController.RunningSpeedFactor = RunningSpeedFactor;
                 SearchingObject.GetComponent<CanvasGroup>().alpha = 1;
-                MenuCanvas.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(0, 0, -2f);
+                MenuCanvas.GetComponent<RectTransform>().anchoredPosition3D = MenuPosition;
             }
         }
     }
@@ -54,8 +58,12 @@ public class WorldMenuManager : MonoBehaviour
 
     public void GoBack()
     {
+        PlayerController.SpeedFactor = SpeedFactor;
+        PlayerController.CrouchSpeedFactor = CrouchSpeedFactor;
+        PlayerController.RunningSpeedFactor = RunningSpeedFactor;
         ObjectScentManager.MenuOn = false;
+        MenuPosition.z = -2f;
         SearchingObject.GetComponent<CanvasGroup>().alpha = 1;
-        MenuCanvas.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(0, 0, -2f);
+        MenuCanvas.GetComponent<RectTransform>().anchoredPosition3D = MenuPosition;
     }
 }

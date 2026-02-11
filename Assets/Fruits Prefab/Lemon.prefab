@@ -69,6 +69,10 @@ PrefabInstance:
       value: Lemon
       objectReference: {fileID: 0}
     - target: {fileID: 5655403424763036392, guid: 6a9eeca5d59c823488177969fff67e3b, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5655403424763036392, guid: 6a9eeca5d59c823488177969fff67e3b, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
@@ -79,9 +83,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5655403424763036392, guid: 6a9eeca5d59c823488177969fff67e3b, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5692538808676400517}
-    - targetCorrespondingSourceObject: {fileID: 5655403424763036392, guid: 6a9eeca5d59c823488177969fff67e3b, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2139762062329901148}
   m_SourcePrefab: {fileID: 100100000, guid: 6a9eeca5d59c823488177969fff67e3b, type: 3}
 --- !u!1 &3518323221077183279 stripped
 GameObject:
@@ -109,27 +110,3 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.05210878, y: 0.06663079, z: 0.065896094}
   m_Center: {x: 0.00014267955, y: 0.033534113, z: 0.007312456}
---- !u!205 &2139762062329901148
-LODGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3518323221077183279}
-  serializedVersion: 2
-  m_LocalReferencePoint: {x: 0, y: 0, z: 0}
-  m_Size: 1
-  m_FadeMode: 0
-  m_AnimateCrossFading: 0
-  m_LastLODIsBillboard: 0
-  m_LODs:
-  - screenRelativeHeight: 0.35245472
-    fadeTransitionWidth: 0
-    renderers: []
-  - screenRelativeHeight: 0.09654925
-    fadeTransitionWidth: 0
-    renderers: []
-  - screenRelativeHeight: 0.008194971
-    fadeTransitionWidth: 0
-    renderers: []
-  m_Enabled: 1
