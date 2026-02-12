@@ -13,7 +13,7 @@ public class BreathingFade : MonoBehaviour
 
     public TextMeshProUGUI breathText;
 
-    [Header("Breath In")]
+    [Header("Breathe in")]
     public float inhaleLogStrength = 4f;
     public float inhaleScale = 1.08f;
     public Color inhaleColor = new Color(0.7f, 0.85f, 1f);
@@ -46,7 +46,7 @@ public class BreathingFade : MonoBehaviour
             if (a < lastA)
             {
                 // Breath In (heller werdend)
-                breathText.text = "Breath In";
+                breathText.text = "Breathe in";
 
                 // Fortschritt korrekt herum
                 float p = 1f - t;
@@ -70,7 +70,7 @@ public class BreathingFade : MonoBehaviour
             else
             {
                 // Breath Out (dunkler werdend)
-                breathText.text = "Breath Out";
+                breathText.text = "Breathe out";
 
                 // linear AUSblenden
                 float outP = t;

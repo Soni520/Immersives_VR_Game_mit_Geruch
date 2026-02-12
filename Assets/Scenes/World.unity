@@ -528,7 +528,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MatchTreeDistance
   targetLayer: 6
-  distance: 2000
+  distance: 75
 --- !u!1 &236476051
 GameObject:
   m_ObjectHideFlags: 0
