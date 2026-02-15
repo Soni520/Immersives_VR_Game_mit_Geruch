@@ -590,13 +590,11 @@ MonoBehaviour:
   m_text: 'Welcome to XXX!
 
 
-
     Step into a world where you nose is your best guide.
 
     Wander
     through the wild, track down fruits by their scents, and once you''ve gathered
     your harvest, we''ll settle down for a relaxing meditation.
-
 
 
     Ready to follow
@@ -756,6 +754,7 @@ GameObject:
   - component: {fileID: 319113960}
   - component: {fileID: 319113966}
   - component: {fileID: 319113965}
+  - component: {fileID: 319113967}
   m_Layer: 0
   m_Name: ScentManager
   m_TagString: Untagged
@@ -829,7 +828,7 @@ MonoBehaviour:
   - {x: 0, y: 35, z: 25}
   spawnableObjects:
   - {fileID: 2558290606065680355, guid: 397aadac1dbca484989b4895d9f52673, type: 3}
-  timeUntilHint: 10
+  timeUntilHint: 10000
   particleTrailPrefab: {fileID: 8467232941717715954, guid: bac03e696621b204e99ed4c837c39eb0, type: 3}
   rightController: 2
   leftController: 1
@@ -842,6 +841,7 @@ MonoBehaviour:
   debugText: {fileID: 418611217}
   showDebug: 1
   spawnedObjects: []
+  showRays: 0
 --- !u!114 &319113966
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -854,6 +854,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f6cf0551052fd24c849b3f4ce947e5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WorldMenuManager
+--- !u!114 &319113967
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 319113959}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42448126822824549891c8cf31b3f6cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TutorialManager
+  TutorialCanvas: {fileID: 805859325}
+  TutorialText: {fileID: 132329389}
+  ContinueText: {fileID: 870720506}
+  SearchingObjectCanvas: {fileID: 1633264496}
 --- !u!1 &328717763
 GameObject:
   m_ObjectHideFlags: 0
@@ -2189,7 +2205,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 805859320}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 1.75}
+  m_LocalPosition: {x: 0, y: 0, z: 2.5}
   m_LocalScale: {x: 0.01568498, y: 0.01568, z: 0.01568}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4512,7 +4528,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1633264491}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -2}
+  m_LocalPosition: {x: 0, y: 0, z: -3}
   m_LocalScale: {x: 0.02, y: 0.02, z: 0.02}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -5001,53 +5017,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2080257324}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1792604831
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1792604833}
-  - component: {fileID: 1792604832}
-  m_Layer: 0
-  m_Name: TutorialManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1792604832
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1792604831}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 42448126822824549891c8cf31b3f6cc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TutorialManager
-  TutorialCanvas: {fileID: 805859325}
-  TutorialText: {fileID: 0}
-  SearchingObject: {fileID: 0}
---- !u!4 &1792604833
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1792604831}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.06671, y: 33.39907, z: 23.22388}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1854905673
 GameObject:
@@ -5781,4 +5750,3 @@ SceneRoots:
   - {fileID: 1060047716}
   - {fileID: 319113961}
   - {fileID: 1129356186}
-  - {fileID: 1792604833}

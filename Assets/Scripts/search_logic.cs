@@ -50,6 +50,8 @@ public class search_logic : MonoBehaviour
     private int maxDebugMessages = 10;
     private float debugTimer = 0f;
 
+    public bool showRays = false;
+
     void Start()
     {
         SpawnObjects();
@@ -389,7 +391,7 @@ public class search_logic : MonoBehaviour
     void UpdateRayVisuals()
     {
         // Prüfe ob Spieler nah genug am Target ist
-        bool showRays = false;
+        showRays = false;
         if (targetObject != null && Player != null)
         {
             float distanceToTarget = Vector3.Distance(Player.transform.position, targetObject.transform.position);
