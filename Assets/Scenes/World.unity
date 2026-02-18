@@ -528,7 +528,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MatchTreeDistance
   targetLayer: 6
-  distance: 75
+  distance: 70
 --- !u!1 &236476051
 GameObject:
   m_ObjectHideFlags: 0
@@ -2240,7 +2240,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &917270421
 RectTransform:
   m_ObjectHideFlags: 0
