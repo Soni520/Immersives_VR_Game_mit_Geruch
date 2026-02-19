@@ -1,9 +1,11 @@
 using UnityEngine;
 using TMPro;
 using UnityEditor;
+using UnityEngine.UI;
 
 public class BreathingFade : MonoBehaviour
 {
+    [SerializeField] private GameObject Modi;
     private GameObject MenuCanvas;
     public Renderer sphereRenderer;
 
@@ -90,5 +92,22 @@ public class BreathingFade : MonoBehaviour
             breathText.color = textColor;
             lastA = a;
         }
+    }
+
+    private void PlaySelectedModi()
+    {
+        switch (PlayerPrefs.GetInt("MeditationModi", 0))
+        {
+            // Normal
+            case 0:
+                break;
+            // Vier Sekunden einatmen, vier Sekunden halten, vier Sekunden ausatmen, vier Sekunden halten.
+            case 1:
+                break;
+            // 4 Sekunden durch die Nase einatmen, 7 Sekunden Atem anhalten, 8 Sekunden ausatmen
+            case 2:
+                break;
+        }
+
     }
 }

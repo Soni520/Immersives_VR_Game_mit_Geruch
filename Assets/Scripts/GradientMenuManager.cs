@@ -1,5 +1,6 @@
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GradientMenuManager : MonoBehaviour
 {
@@ -84,5 +85,10 @@ public class GradientMenuManager : MonoBehaviour
         MusicPlayer.GetComponent<AudioSource>().Play();
         OlfactoryDeviceManager.StartPump();
         MenuOn = false;
+    }
+
+    public void SetModi(int modi)
+    {
+        PlayerPrefs.SetInt("MeditationModi", modi);
     }
 }
