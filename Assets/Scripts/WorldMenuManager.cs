@@ -34,7 +34,7 @@ public class WorldMenuManager : MonoBehaviour
                 PlayerController.SpeedFactor = 0;
                 PlayerController.CrouchSpeedFactor = 0;
                 PlayerController.RunningSpeedFactor = 0;
-                MenuPosition.z = 1.75f;
+                MenuPosition.z = 2f;
                 MenuCanvas.GetComponent<RectTransform>().anchoredPosition3D = MenuPosition;
                 SearchingObject.GetComponent<CanvasGroup>().alpha = 0;
                 

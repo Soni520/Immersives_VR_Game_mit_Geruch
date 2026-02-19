@@ -38,7 +38,7 @@ public class GradientMenuManager : MonoBehaviour
             if(!MenuOn)
             {
                 MenuOn = true;
-                MenuPosition.z = 1.75f;
+                MenuPosition.z = 2f;
                 BreathingPosition.z = -2f;
                 MenuCanvas.GetComponent<RectTransform>().anchoredPosition3D = MenuPosition;
                 BreathingCanvas.GetComponent<RectTransform>().anchoredPosition3D = BreathingPosition;
@@ -49,7 +49,7 @@ public class GradientMenuManager : MonoBehaviour
             {
                 MenuOn = false;
                 MenuPosition.z = -2f;
-                BreathingPosition.z = 1.75f;
+                BreathingPosition.z = 2f;
                 MenuCanvas.GetComponent<RectTransform>().anchoredPosition3D = MenuPosition;
                 BreathingCanvas.GetComponent<RectTransform>().anchoredPosition3D = BreathingPosition;
                 VideoPlayer.GetComponent<UnityEngine.Video.VideoPlayer>().Play();
@@ -78,7 +78,7 @@ public class GradientMenuManager : MonoBehaviour
     public void GoBack()
     {
         MenuPosition.z = -2f;
-        BreathingPosition.z = 1.75f;
+        BreathingPosition.z = 2f;
         MenuCanvas.GetComponent<RectTransform>().anchoredPosition3D = MenuPosition;
         BreathingCanvas.GetComponent<RectTransform>().anchoredPosition3D = BreathingPosition;
         VideoPlayer.GetComponent<UnityEngine.Video.VideoPlayer>().Play();
