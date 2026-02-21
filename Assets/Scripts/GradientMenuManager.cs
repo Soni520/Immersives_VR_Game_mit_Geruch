@@ -90,5 +90,6 @@ public class GradientMenuManager : MonoBehaviour
     public void SetModi(int modi)
     {
         PlayerPrefs.SetInt("MeditationModi", modi);
+        PlayerPrefs.SetInt("Phase", 0);
     }
 }

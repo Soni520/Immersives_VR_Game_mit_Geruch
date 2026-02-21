@@ -22,9 +22,8 @@ public class BreathingFade : MonoBehaviour
 
     float lastA;
     Vector3 baseScale;
-    private float Alpha = 0.05f;
     private int Phase = 0;
-    private float Timer = 0;
+    private float Timer = -4;
     private float t = 0;
 
     void Start()
@@ -40,8 +39,8 @@ public class BreathingFade : MonoBehaviour
             return;
         }else if (MenuCanvas.transform.position.z < 0f){
             PlaySelectedModi();
-            if (Phase != 1 && Phase != 2){
-                t = Mathf.PingPong(Time.time * speed, 1f);
+            if (Phase != 1 && Phase != 3){
+                t = Mathf.PingPong(Timer * speed, 1f);
                 // Sphere
                 float a = Mathf.Lerp(minAlpha, maxAlpha, t);
                 Color sphereColor = sphereRenderer.material.color;
@@ -103,10 +102,12 @@ public class BreathingFade : MonoBehaviour
     private void PlaySelectedModi()
     {
         Timer += Time.deltaTime;
-        switch (PlayerPrefs.GetInt("MeditationModi", 1))
+        Phase = PlayerPrefs.GetInt("Phase", 0);
+        switch (PlayerPrefs.GetInt("MeditationModi", 2))
         {
             // Normal
             case 0:
+                //Timer = 0;?
                 speed = ((maxAlpha - minAlpha) / 3);
                 break;
             // Vier Sekunden einatmen, vier Sekunden halten, vier Sekunden ausatmen, vier Sekunden halten.
@@ -114,14 +115,14 @@ public class BreathingFade : MonoBehaviour
                 switch (Phase)
                 {
                     case 0:
-                        if(Timer <= 4)
+                        if(Timer <= 0)
                         {
                             speed = ((maxAlpha - minAlpha) / 4);
                             break;
                         }
                         else
                         {
-                            Phase++;
+                            PlayerPrefs.SetInt("Phase", 1);
                             Timer = 0;
                             break;
                         }
@@ -129,7 +130,7 @@ public class BreathingFade : MonoBehaviour
                         breathText.text = "Hold your breath";
                         if(Timer > 4)
                         {
-                            Phase++;
+                            PlayerPrefs.SetInt("Phase", 2);
                             Timer = 0;
                             break;
                         }
@@ -142,7 +143,7 @@ public class BreathingFade : MonoBehaviour
                         }
                         else
                         {
-                            Phase++;
+                            PlayerPrefs.SetInt("Phase", 3);
                             Timer = 0;
                             break;
                         }
@@ -181,8 +182,8 @@ public class BreathingFade : MonoBehaviour
 
                         if(Timer > 4)
                         {
-                            Phase = 0;
-                            Timer = 0;
+                            PlayerPrefs.SetInt("Phase", 0);
+                            Timer = -4;
                             break;
                         }
                         break;
@@ -193,14 +194,14 @@ public class BreathingFade : MonoBehaviour
                 switch (Phase)
                 {
                     case 0:
-                        if(Timer <= 4)
+                        if(Timer <= 0)
                         {
                             speed = ((maxAlpha - minAlpha) / 4);
                             break;
                         }
                         else
                         {
-                            Phase++;
+                            PlayerPrefs.SetInt("Phase", 1);
                             Timer = 0;
                             break;
                         }
@@ -208,21 +209,20 @@ public class BreathingFade : MonoBehaviour
                         breathText.text = "Hold your breath";
                         if(Timer > 7)
                         {
-                            Phase++;
+                            PlayerPrefs.SetInt("Phase", 2);
                             Timer = 0;
-                            break;
                         }
                         break;
                     case 2:
                         if(Timer <= 8)
                         {
-                            speed = ((maxAlpha - minAlpha) / 4);
+                            speed = ((maxAlpha - minAlpha) / 8);
                             break;
                         }
                         else
                         {
-                            Phase = 0;
-                            Timer = 0;
+                            PlayerPrefs.SetInt("Phase", 0);
+                            Timer = -4;
                             break;
                         }
                 }
