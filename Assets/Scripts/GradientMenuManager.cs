@@ -29,6 +29,7 @@ public class GradientMenuManager : MonoBehaviour
         OlfactoryDeviceManager.SetPump(PlayerPrefs.GetInt("CurrentFruit", Random.Range(1, 4)));
         OlfactoryDeviceManager.SetFrequency(PlayerPrefs.GetInt("ScentIntensity", 50) * 1.5f);
         OlfactoryDeviceManager.StartPump();
+        PlayerPrefs.SetInt("Phase", 0);
     }
 
     void Update()
@@ -85,11 +86,5 @@ public class GradientMenuManager : MonoBehaviour
         MusicPlayer.GetComponent<AudioSource>().Play();
         OlfactoryDeviceManager.StartPump();
         MenuOn = false;
-    }
-
-    public void SetModi(int modi)
-    {
-        PlayerPrefs.SetInt("MeditationModi", modi);
-        PlayerPrefs.SetInt("Phase", 0);
     }
 }

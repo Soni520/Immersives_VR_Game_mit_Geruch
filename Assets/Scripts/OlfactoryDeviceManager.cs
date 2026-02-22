@@ -14,7 +14,7 @@ public class OlfactoryDeviceManager : MonoBehaviour
 
     private void Awake()
     {
-        /*AndroidJavaObject androidUnityLibJavaClass = new AndroidJavaObject("com.ethanlin.serialportlib.UnitySerialPortDataLib");
+        AndroidJavaObject androidUnityLibJavaClass = new AndroidJavaObject("com.ethanlin.serialportlib.UnitySerialPortDataLib");
         _androidInstanceJavaObject = androidUnityLibJavaClass.CallStatic<AndroidJavaObject>("getInstance");
         if (_androidInstanceJavaObject != null)
         {
@@ -23,17 +23,12 @@ public class OlfactoryDeviceManager : MonoBehaviour
         else
         {
             Debug.LogError("Error, android native library Java object is null");
-        }*/
-    }
-
-    private void Start()
-    {
-
+        }
     }
 
     public void Open()
     {
-        /*if (_androidInstanceJavaObject != null)
+        if (_androidInstanceJavaObject != null)
         {
             _androidInstanceJavaObject.Call("openSerialPort", _baudRate, _dataBits, _stopBits, _parity);
             TextField.text = "Connected";
@@ -41,44 +36,44 @@ public class OlfactoryDeviceManager : MonoBehaviour
         else
         {
             Debug.LogError("Error, android native library Java object is null");
-        }*/
+        }
     }
 
     public void Write(string message)
     {
-        /*if (_androidInstanceJavaObject != null)
+        if (_androidInstanceJavaObject != null)
         {
             _androidInstanceJavaObject.Call("writeSerialPort", message);
         }
         else
         {
             Debug.LogError("Error, android native library Java object is null");
-        }*/
+        }
     }
 
     public void SetPump(int pump) 
     {
-        //Write("setAPump:" + pump);
-        //Write("setF:75");
+        Write("setAPump:" + pump);
+        Write("setF:75");
     }
 
     public void SetFrequency(double frequency)
     {
-        //Write("setF:" + frequency);
+        Write("setF:" + frequency);
     }
     public bool StartPump()
     {
-        //Write("setStatus:1");
+        Write("setStatus:1");
         return true;
     }
 
     public bool StopAllPumps() 
     {
-        /*for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 5; i++)
         {
             Write("setAPump:" + i);
             Write("setStatus:0");
-        }*/
+        }
         return false;
     }
 
