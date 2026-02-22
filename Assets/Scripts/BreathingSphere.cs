@@ -103,15 +103,14 @@ public class BreathingFade : MonoBehaviour
     {
         Timer += Time.deltaTime;
         Phase = PlayerPrefs.GetInt("Phase", 0);
-        switch (PlayerPrefs.GetInt("MeditationModi", 2))
+        switch (PlayerPrefs.GetInt("CurrentFruit", 1))
         {
             // Normal
-            case 0:
-                //Timer = 0;?
+            case 1:
                 speed = ((maxAlpha - minAlpha) / 3);
                 break;
             // Vier Sekunden einatmen, vier Sekunden halten, vier Sekunden ausatmen, vier Sekunden halten.
-            case 1:
+            case 2:
                 switch (Phase)
                 {
                     case 0:
@@ -190,7 +189,7 @@ public class BreathingFade : MonoBehaviour
                 }
                 break;
             // 4 Sekunden durch die Nase einatmen, 7 Sekunden Atem anhalten, 8 Sekunden ausatmen
-            case 2:
+            case 3:
                 switch (Phase)
                 {
                     case 0:
@@ -227,7 +226,40 @@ public class BreathingFade : MonoBehaviour
                         }
                 }
                 break;
+            case 4:
+                switch (Phase)
+                {
+                    case 0:
+                        if (Timer <= 0)
+                        {
+                            speed = ((maxAlpha - minAlpha) / 4);
+                            break;
+                        }
+                        else
+                        {
+                            PlayerPrefs.SetInt("Phase", 1);
+                            Timer = 0;
+                            break;
+                        }
+                    case 1:
+                        PlayerPrefs.SetInt("Phase", 2);
+                        Timer = 0;
+                        break;
+                    case 2:
+                        if (Timer <= 6)
+                        {
+                            speed = ((maxAlpha - minAlpha) / 6);
+                            break;
+                        }
+                        else
+                        {
+                            PlayerPrefs.SetInt("Phase", 0);
+                            Timer = -4;
+                            break;
+                        }
+        
+                }
+                break;
         }
-
     }
 }

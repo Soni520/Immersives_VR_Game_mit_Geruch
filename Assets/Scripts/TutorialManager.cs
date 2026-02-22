@@ -29,7 +29,7 @@ public class TutorialManager : MonoBehaviour
             switch (TutorialStage)
             {
                 case 0:
-                    TutorialText.text = "\nUse the <b>Left Joystick</b> to <b>walk</b> around in the world and the <b>Right Joystick</b> to <b>look</b> around.\n\nIf you want to <b>pause</b> or get back to the <b>menu</b> press the <b>menu button</b> on your left controller.";
+                    TutorialText.text = "\nUse the <b>Left Joystick</b> to <b>walk</b> around in the world and the <b>Right Joystick</b> to <b>look</b> around.\n\nIf you want to <b>pause</b> or get back to the <b>Menu</b> press the <b>Menu Button</b> on your left controller.";
                     break;
                 case 1:
                     TutorialText.text = "\nThe hint in the <b>Upper Left Corner</b> shows you which <b>Fruit</b> to look for.";
@@ -39,27 +39,31 @@ public class TutorialManager : MonoBehaviour
                     TutorialCanvas.GetComponent<RectTransform>().sizeDelta = new Vector2(100, 70);
                     break;
                 case 2:
-                    TutorialText.text = "\nIf you aren't getting closer after some time, <b>particles</b> will appear beneath your feet to <b>point the way</b>. These act as a guide toward the Fruit you are searching for. Once you begin walking in the <b>right direction</b>, the trail will <b>disappear</b>.";
+                    TutorialText.text = "\nIf you aren't getting closer after some time, <b>Particles</b> will appear beneath your feet to <b>point the way</b>. These act as a guide toward the fruit you are searching for. Once you begin walking in the <b>Right Direction</b>, the trail will <b>disappear</b>.";
                     SearchingObjectCanvas.GetComponentInChildren<Image>().color = new Color(1, 1, 1, 200/255f);
                     TutorialCanvas.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(0.6f, -0.2f, 3);
                     TutorialCanvas.GetComponent<RectTransform>().sizeDelta = new Vector2(150, 90);
                     SearchLogic.timeUntilHint = 0;
                     break;
                 case 3:
+                    TutorialText.text = "Once you find the fruit, you will be taken to a <b>Medition World</b>. There you can do some <b>Breating Excercises</b>, <b>meditate</b> and <b>relax</b>.";
+                    TutorialCanvas.GetComponent<RectTransform>().sizeDelta = new Vector2(135, 65);
+                    SearchLogic.timeUntilHint = 10;
+                    break;
+                case 4:
                     TutorialText.text = "Now try to find the fruit.";
                     ContinueText.text = "Press B to hide this window.";
-                    SearchLogic.timeUntilHint = 10;
                     TutorialCanvas.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(0f, -0.2f, 3);
                     TutorialCanvas.GetComponent<RectTransform>().sizeDelta = new Vector2(135, 35);
                     break;
-                case 4:
+                case 5:
                     TutorialCanvas.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(0.8f, -0.2f, -2.5f);
                     break;
                 default:
                     break;
             }
         }
-        if (SearchLogic.showRays && TutorialStage >= 3)
+        if (SearchLogic.showRays && TutorialStage >= 4)
         {
             TutorialText.text = "Proceed to the <b>meditation</b> by aiming at the <b>fruit</b> and using the <b>trigger</b>.";
             ContinueText.text = "";
