@@ -8,49 +8,99 @@ using Random = UnityEngine.Random;
 public class search_logic : MonoBehaviour
 {
 
-    public TextMeshProUGUI uiText;
-    [SerializeField] private GameObject Player;
-    private OlfactoryDeviceManager OlfactoryDeviceManager;
+ // UI element to display text information to the player
+public TextMeshProUGUI uiText;
 
-    public List<Vector3> spawnPositions;
-    public List<GameObject> spawnableObjects;
+// Reference to the player GameObject
+[SerializeField] private GameObject Player;
 
-    [Header("Hint Settings")]
-    public float timeUntilHint = 10f;
-    public ParticleSystem particleTrailPrefab;
+// Manager handling the olfactory (scent) device
+private OlfactoryDeviceManager OlfactoryDeviceManager;
 
-    [Header("VR Controller Settings")]
-    public OVRInput.Controller rightController = OVRInput.Controller.RTouch;
-    public OVRInput.Controller leftController = OVRInput.Controller.LTouch;
-    public float rayDistance = 10f;
-    public float rayShowDistance = 5f; 
-    public LayerMask raycastLayerMask = ~0;
+// List of possible positions where objects can be spawned
+public List<Vector3> spawnPositions;
 
-    [Header("Scene Settings")]
-    public string targetSceneName = "meditation_scene";
+// List of objects that can be spawned in the scene
+public List<GameObject> spawnableObjects;
 
-    [Header("Debug Settings")]
-    public TextMeshProUGUI debugText; // Zus�tzliches Text-Feld f�r Debug-Info
-    public bool showDebug = true;
+[Header("Hint Settings")]
+// Time in seconds before a hint is shown to the player
+public float timeUntilHint = 10f;
 
-    public List<GameObject> spawnedObjects = new List<GameObject>();
-    private GameObject targetObject;
-    private GameObject previousTarget;
-    private float searchTimer = 0f;
-    private ParticleSystem activeParticleTrail;
-    private bool hintActive = false;
-    private float previousDistanceToTarget = float.MaxValue;
+// Particle system prefab used to create a visual trail hint
+public ParticleSystem particleTrailPrefab;
 
-    private Transform rightControllerTransform;
-    private Transform leftControllerTransform;
-    private LineRenderer rightRayLine;
-    private LineRenderer leftRayLine;
+[Header("VR Controller Settings")]
+// OVR input reference for the right controller
+public OVRInput.Controller rightController = OVRInput.Controller.RTouch;
 
-    private List<string> debugMessages = new List<string>();
-    private int maxDebugMessages = 10;
-    private float debugTimer = 0f;
+// OVR input reference for the left controller
+public OVRInput.Controller leftController = OVRInput.Controller.LTouch;
 
-    public bool showRays = false;
+// Maximum distance of the raycast from the controller
+public float rayDistance = 10f;
+
+// Distance threshold at which the ray becomes visible
+public float rayShowDistance = 5f;
+
+// Layer mask determining which objects the raycast can hit
+public LayerMask raycastLayerMask = ~0;
+
+[Header("Scene Settings")]
+// Name of the target scene to load
+public string targetSceneName = "meditation_scene";
+
+[Header("Debug Settings")]
+// UI element to display debug messages
+public TextMeshProUGUI debugText;
+
+// Toggle to enable or disable debug output
+public bool showDebug = true;
+
+// List of all currently spawned objects in the scene
+public List<GameObject> spawnedObjects = new List<GameObject>();
+
+// The current target object the player needs to find
+private GameObject targetObject;
+
+// The previously targeted object
+private GameObject previousTarget;
+
+// Tracks how long the player has been searching, used to check when to activate the particle trail
+private float searchTimer = 0f;
+
+// The currently active particle trail instance
+private ParticleSystem activeParticleTrail;
+
+// Whether the particle strail is currently active or not
+private bool hintActive = false;
+
+// Distance to the target in the previous frame (used to detect approach/retreat)
+private float previousDistanceToTarget = float.MaxValue;
+
+// Transform of the right controller for raycasting
+private Transform rightControllerTransform;
+
+// Transform of the left controller for raycasting
+private Transform leftControllerTransform;
+
+// Line renderer for visualizing the right controller ray
+private LineRenderer rightRayLine;
+
+// Line renderer for visualizing the left controller ray
+private LineRenderer leftRayLine;
+
+// Rolling list of recent debug messages
+private List<string> debugMessages = new List<string>();
+
+// Maximum number of debug messages to display at once
+private int maxDebugMessages = 10;
+
+// Timer to control debug message refresh rate
+private float debugTimer = 0f;
+
+// Toggle to show or hide the controller rays in the scene
+public bool showRays = false;
 
     void Start()
     {
@@ -82,7 +132,7 @@ public class search_logic : MonoBehaviour
 
     void Update()
     {
-        // Periodischer Debug-Output alle 2 Sekunden
+        // Periodic debug output (every 2 seconds)
         debugTimer += Time.deltaTime;
         if (debugTimer >= 2f)
         {
@@ -107,7 +157,7 @@ public class search_logic : MonoBehaviour
         if (currentNearest != targetObject)
         {
             searchTimer = 0f;
-
+            // destroy particles if target changed
             if (hintActive && activeParticleTrail != null)
             {
                 Destroy(activeParticleTrail.gameObject);
@@ -165,7 +215,7 @@ public class search_logic : MonoBehaviour
             HighlightObject(targetObject);
         }
 
-        // VR Controller Raycast f�r rechten Controller
+        // VR Controller Raycast for right controller
         if (OVRInput.GetDown(OVRInput.Button.One, rightController) ||
             OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, rightController) > 0.5f)
         {
@@ -173,7 +223,7 @@ public class search_logic : MonoBehaviour
             CheckControllerRaycast(rightControllerTransform, "RIGHT");
         }
 
-        // VR Controller Raycast f�r linken Controller
+        // VR Controller Raycast for left controller
         if (OVRInput.GetDown(OVRInput.Button.One, leftController) ||
             OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, leftController) > 0.5f)
         {
@@ -183,7 +233,7 @@ public class search_logic : MonoBehaviour
 
         UpdateRayVisuals();
 
-        // Fallback f�r Editor-Testing
+        // Fallback for editor testing
         if (Input.GetMouseButtonDown(0))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -352,7 +402,7 @@ public class search_logic : MonoBehaviour
         SceneManager.LoadScene("Gradient");
     }
 
-    // Debug-Funktionen
+    // Debug-function
     void AddDebugMessage(string message)
     {
         if (!showDebug) return;
@@ -363,7 +413,7 @@ public class search_logic : MonoBehaviour
             debugMessages.RemoveAt(0);
         }
 
-        Debug.Log(message); // Auch in normale Console
+        Debug.Log(message); 
     }
 
     void UpdateDebugDisplay()
@@ -390,7 +440,7 @@ public class search_logic : MonoBehaviour
 
     void UpdateRayVisuals()
     {
-        // Prüfe ob Spieler nah genug am Target ist
+        // Check if player is close enough to the target
         showRays = false;
         if (targetObject != null && Player != null)
         {
@@ -406,7 +456,7 @@ public class search_logic : MonoBehaviour
     {
         if (controller == null || line == null) return;
 
-        // Ray ausblenden wenn Spieler nicht nah genug am Target ist
+        // Disable rays if player is not close enough to the target
         line.enabled = showRay;
         if (!showRay) return;
 
